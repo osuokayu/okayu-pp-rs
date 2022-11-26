@@ -314,6 +314,9 @@ impl<'m> OsuPP<'m> {
 
                 // over the top [Above the stars]
                 1821147 => 0.70,
+                
+                // Ascension to Heaven [The Gates of Heaven]
+                1849420 => 0.70,
 
                 // Just press F [Parkour's ok this is epic]
                 1844776 => 0.64,
