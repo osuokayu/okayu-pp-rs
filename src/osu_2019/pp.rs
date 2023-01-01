@@ -352,6 +352,7 @@ impl<'m> OsuPP<'m> {
             pp_flashlight: 0.0,
             pp_speed: speed_value as f64,
             pp: pp as f64,
+            effective_miss_count: effective_miss_count as f64,
         }
     }
 
@@ -562,7 +563,7 @@ impl<'m> OsuPP<'m> {
         let mut combo_based_miss_count = 0.0;
 
         let attributes = self.attributes.as_ref().unwrap();
-        let combo = self.combo.unwrap() as f32;
+        let combo = self.combo.unwrap_or(attributes.max_combo) as f32;
         let n100 = self.n100.unwrap_or(0) as f32;
         let n50 = self.n50.unwrap_or(0) as f32;
 
