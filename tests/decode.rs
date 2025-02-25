@@ -1,4 +1,4 @@
-use akatsuki_pp::{model::mode::GameMode, Beatmap, GameMods};
+use okayu_pp::{model::mode::GameMode, Beatmap, GameMods};
 
 use crate::common::assert_eq_float;
 

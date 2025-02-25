@@ -1,11 +1,11 @@
 [package]
-name = "akatsuki-pp"
+name = "okayu-pp"
 version = "1.1.5"
 edition = "2021"
 authors = ["MaxOhn <ohn.m@hotmail.de>", "tsunyoku <tsunyoku@gmail.com>", "Aochi <me@aochi.uk>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/RealistikOsu/akatsuki-pp-rs"
+repository = "https://github.com/osuokayu/okayu-pp-rs"
 description = "Difficulty and performance calculation for osu!"
 keywords = ["osu", "pp", "stars", "performance", "difficulty"]
 

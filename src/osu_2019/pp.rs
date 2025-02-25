@@ -6,8 +6,8 @@ use crate::{Beatmap, GameMods};
 /// # Example
 ///
 /// ```
-/// # use akatsuki_pp::Beatmap;
-/// # use akatsuki_pp::osu_2019::OsuPP;
+/// # use okayu_pp::Beatmap;
+/// # use okayu_pp::osu_2019::OsuPP;
 /// # /*
 /// let map: Beatmap = ...
 /// # */
@@ -272,11 +272,12 @@ impl<'m> OsuPP<'m> {
             }
         }
 
-        let pp = (aim_value.powf(1.185)
-            + speed_value.powf(0.83 * acc_depression)
-            + acc_value.powf(1.14))
+        let pp = (aim_value.powf(1.2)
+            + speed_value.powf(0.84 * acc_depression)
+            + acc_value.powf(1.18))
         .powf(1.0 / 1.1)
-            * multiplier;
+            * multiplier
+            * 0.9;
 
             OsuPerformanceAttributes {
             difficulty: self.attributes.unwrap(),
@@ -322,7 +323,7 @@ impl<'m> OsuPP<'m> {
 
         // AR bonus
         let mut ar_factor = if attributes.ar > 10.33 {
-            0.05 * (attributes.ar - 10.33)
+            0.15 * (attributes.ar - 10.33)
         } else {
             0.0
         };
@@ -385,9 +386,9 @@ impl<'m> OsuPP<'m> {
         // AR bonus
         if attributes.ar > 10.33 {
             let mut ar_factor = if attributes.ar > 10.33 {
-                0.05 * (attributes.ar - 10.33)
+                0.15 * (attributes.ar - 10.33)
             } else {
-                0.0
+                0.15
             };
 
             if attributes.ar < 8.0 {

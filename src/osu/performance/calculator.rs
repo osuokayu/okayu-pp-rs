@@ -68,6 +68,10 @@ impl OsuPerformanceCalculator<'_> {
             multiplier *= (1.0 - 0.02 * self.effective_miss_count).max(0.9);
         }
 
+        if self.mods.hr() {
+            multiplier *= 1.05;
+        }
+
         if self.mods.so() && total_hits > 0.0 {
             multiplier *= 1.0 - (f64::from(self.attrs.n_spinners) / total_hits).powf(0.85);
         }
@@ -102,9 +106,9 @@ impl OsuPerformanceCalculator<'_> {
         let acc_value = self.compute_accuracy_value();
         let flashlight_value = self.compute_flashlight_value();
 
-        let pp = (aim_value.powf(1.1)
-            + speed_value.powf(1.1)
-            + acc_value.powf(1.1)
+        let pp = (aim_value.powf(1.148)
+            + speed_value.powf(1.152)
+            + acc_value.powf(1.14)
             + flashlight_value.powf(1.1))
         .powf(1.0 / 1.1)
             * multiplier;
@@ -171,7 +175,7 @@ impl OsuPerformanceCalculator<'_> {
         let total_hits = self.total_hits();
 
         let len_bonus = 0.95
-            + 0.4 * (total_hits / 2000.0).min(1.0)
+            + 0.42 * (total_hits / 2000.0).min(1.0)
             + f64::from(u8::from(total_hits > 2000.0)) * (total_hits / 2000.0).log10() * 0.5;
 
         aim_value *= len_bonus;
@@ -224,7 +228,7 @@ impl OsuPerformanceCalculator<'_> {
         let total_hits = self.total_hits();
 
         let len_bonus = 0.95
-            + 0.4 * (total_hits / 2000.0).min(1.0)
+            + 0.45 * (total_hits / 2000.0).min(1.0)
             + f64::from(u8::from(total_hits > 2000.0)) * (total_hits / 2000.0).log10() * 0.5;
 
         speed_value *= len_bonus;

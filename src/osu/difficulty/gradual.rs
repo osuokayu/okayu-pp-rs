@@ -32,8 +32,8 @@ use super::{
 /// # Example
 ///
 /// ```
-/// use akatsuki_pp::{Beatmap, Difficulty};
-/// use akatsuki_pp::osu::{Osu, OsuGradualDifficulty};
+/// use okayu_pp::{Beatmap, Difficulty};
+/// use okayu_pp::osu::{Osu, OsuGradualDifficulty};
 ///
 /// let map = Beatmap::from_path("./resources/2785319.osu").unwrap();
 ///

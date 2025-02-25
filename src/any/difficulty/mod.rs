@@ -28,7 +28,7 @@ use crate::model::mode::IGameMode;
 /// # Example
 ///
 /// ```
-/// use akatsuki_pp::{Beatmap, Difficulty, any::DifficultyAttributes};
+/// use okayu_pp::{Beatmap, Difficulty, any::DifficultyAttributes};
 ///
 /// let map = Beatmap::from_path("./resources/2118524.osu").unwrap();
 ///
