@@ -1,11 +1,6 @@
-mod difficulty_object;
-mod gradual_difficulty;
-mod gradual_performance;
-mod osu_object;
-mod pp;
-mod scaling_factor;
-mod skills;
+use rosu_map::util::Pos;
 
+<<<<<<< HEAD
 use skills::OsuStrainSkill;
 
 use crate::{curve::CurveBuffers, parse::Pos2, AnyStars, Beatmap, GameMode, Mods};
@@ -15,92 +10,69 @@ use self::{
     osu_object::{ObjectParameters, OsuObject},
     scaling_factor::ScalingFactor,
     skills::Skills,
+=======
+use crate::{
+    model::{
+        beatmap::Beatmap,
+        mode::{ConvertError, IGameMode},
+    },
+    Difficulty,
+>>>>>>> c0e499ec3ac138c7cc329771fc70992de39fbb77
 };
 
-pub use self::{gradual_difficulty::*, gradual_performance::*, pp::*};
+pub use self::{
+    attributes::{OsuDifficultyAttributes, OsuPerformanceAttributes},
+    difficulty::gradual::OsuGradualDifficulty,
+    performance::{gradual::OsuGradualPerformance, OsuPerformance},
+    score_state::{OsuScoreOrigin, OsuScoreState},
+    strains::OsuStrains,
+};
 
-const SECTION_LEN: f64 = 400.0;
-const DIFFICULTY_MULTIPLIER: f64 = 0.0675;
-// * Change radius to 50 to make 100 the diameter. Easier for mental maths.
-const NORMALIZED_RADIUS: f32 = 50.0;
-const STACK_DISTANCE: f32 = 3.0;
-// * This is being adjusted to keep the final pp value scaled around what it used to be when changing things.
-const PERFORMANCE_BASE_MULTIPLIER: f64 = 1.14;
-const PREEMPT_MIN: f64 = 450.0;
-const FADE_IN_DURATION_MULTIPLIER: f64 = 0.4;
-const PLAYFIELD_BASE_SIZE: Pos2 = Pos2 { x: 512.0, y: 384.0 };
+mod attributes;
+mod convert;
+mod difficulty;
+mod object;
+mod performance;
+mod score_state;
+mod strains;
 
-/// Difficulty calculator on osu!standard maps.
-///
-/// # Example
-///
-/// ```
-/// use rosu_pp::{OsuStars, Beatmap};
-///
-/// # /*
-/// let map: Beatmap = ...
-/// # */
-/// # let map = Beatmap::default();
-///
-/// let difficulty_attrs = OsuStars::new(&map)
-///     .mods(8 + 64) // HDDT
-///     .calculate();
-///
-/// println!("Stars: {}", difficulty_attrs.stars);
-/// ```
-#[derive(Clone, Debug)]
-pub struct OsuStars<'map> {
-    pub(crate) map: &'map Beatmap,
-    pub(crate) mods: u32,
-    pub(crate) passed_objects: Option<usize>,
-    pub(crate) clock_rate: Option<f64>,
-}
+const PLAYFIELD_BASE_SIZE: Pos = Pos::new(512.0, 384.0);
 
-impl<'map> OsuStars<'map> {
-    /// Create a new difficulty calculator for osu!standard maps.
-    #[inline]
-    pub fn new(map: &'map Beatmap) -> Self {
-        Self {
-            map,
-            mods: 0,
-            passed_objects: None,
-            clock_rate: None,
-        }
+/// Marker type for [`GameMode::Osu`].
+///
+/// [`GameMode::Osu`]: rosu_map::section::general::GameMode::Osu
+pub struct Osu;
+
+impl IGameMode for Osu {
+    type DifficultyAttributes = OsuDifficultyAttributes;
+    type Strains = OsuStrains;
+    type Performance<'map> = OsuPerformance<'map>;
+    type GradualDifficulty = OsuGradualDifficulty;
+    type GradualPerformance = OsuGradualPerformance;
+
+    fn difficulty(
+        difficulty: &Difficulty,
+        map: &Beatmap,
+    ) -> Result<Self::DifficultyAttributes, ConvertError> {
+        difficulty::difficulty(difficulty, map)
     }
 
-    /// Convert the map into another mode.
-    #[inline]
-    pub fn mode(self, mode: GameMode) -> AnyStars<'map> {
-        match mode {
-            GameMode::Osu => AnyStars::Osu(self),
-            GameMode::Taiko => AnyStars::Taiko(self.into()),
-            GameMode::Catch => AnyStars::Catch(self.into()),
-            GameMode::Mania => AnyStars::Mania(self.into()),
-        }
+    fn strains(difficulty: &Difficulty, map: &Beatmap) -> Result<Self::Strains, ConvertError> {
+        strains::strains(difficulty, map)
     }
 
-    /// Specify mods through their bit values.
-    ///
-    /// See [https://github.com/ppy/osu-api/wiki#mods](https://github.com/ppy/osu-api/wiki#mods)
-    #[inline]
-    pub fn mods(mut self, mods: u32) -> Self {
-        self.mods = mods;
-
-        self
+    fn performance(map: &Beatmap) -> Self::Performance<'_> {
+        OsuPerformance::new(map)
     }
 
-    /// Amount of passed objects for partial plays, e.g. a fail.
-    ///
-    /// If you want to calculate the difficulty after every few objects, instead of
-    /// using [`OsuStars`] multiple times with different `passed_objects`, you should use
-    /// [`OsuGradualDifficultyAttributes`](crate::osu::OsuGradualDifficultyAttributes).
-    #[inline]
-    pub fn passed_objects(mut self, passed_objects: usize) -> Self {
-        self.passed_objects = Some(passed_objects);
-
-        self
+    fn gradual_difficulty(
+        difficulty: Difficulty,
+        map: &Beatmap,
+    ) -> Result<Self::GradualDifficulty, ConvertError> {
+        OsuGradualDifficulty::new(difficulty, map)
     }
 
+<<<<<<< HEAD
     /// Adjust the clock rate used in the calculation.
     /// If none is specified, it will take the clock rate based on the mods
     /// i.e. 1.5 for DT, 0.75 for HT and 1.0 otherwise.
@@ -592,5 +564,12 @@ impl From<OsuPerformanceAttributes> for OsuDifficultyAttributes {
     #[inline]
     fn from(attributes: OsuPerformanceAttributes) -> Self {
         attributes.difficulty
+=======
+    fn gradual_performance(
+        difficulty: Difficulty,
+        map: &Beatmap,
+    ) -> Result<Self::GradualPerformance, ConvertError> {
+        OsuGradualPerformance::new(difficulty, map)
+>>>>>>> c0e499ec3ac138c7cc329771fc70992de39fbb77
     }
 }
