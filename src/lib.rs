@@ -140,16 +140,6 @@
 //! [`GradualDifficulty`]: crate::any::GradualDifficulty
 //! [`GradualPerformance`]: crate::any::GradualPerformance
 
-<<<<<<< HEAD
-#![cfg_attr(docsrs, feature(doc_cfg), deny(broken_intra_doc_links))]
-#![deny(
-    clippy::all,
-    nonstandard_style,
-    rust_2018_idioms,
-    unused,
-    warnings,
-    missing_debug_implementations
-=======
 #![deny(rustdoc::broken_intra_doc_links, rustdoc::missing_crate_level_docs)]
 #![warn(clippy::missing_const_for_fn, clippy::pedantic)]
 #![allow(
@@ -164,7 +154,6 @@
     clippy::explicit_iter_loop,
     clippy::similar_names,
     clippy::cast_possible_wrap
->>>>>>> c0e499ec3ac138c7cc329771fc70992de39fbb77
 )]
 
 #[doc(inline)]
@@ -179,14 +168,7 @@ pub mod any;
 /// Types for osu!standard calculations.
 pub mod osu;
 
-<<<<<<< HEAD
-/// osu! 2019 (for relax)
-pub mod osu_2019;
-
-/// Everything about osu!taiko.
-=======
 /// Types for osu!taiko calculations.
->>>>>>> c0e499ec3ac138c7cc329771fc70992de39fbb77
 pub mod taiko;
 
 /// Types for osu!catch calculations.
