@@ -309,7 +309,10 @@ impl<'m> OsuPP<'m> {
 
         // Penalize misses
         if effective_miss_count > 0.0 {
-            let miss_penalty = self.calculate_miss_penalty(effective_miss_count);
+            let miss_penalty = self.calculate_miss_penalty(
+                effective_miss_count,
+                attributes.aim_difficult_strain_count
+            );
             aim_value *= miss_penalty;
         }
 
@@ -362,7 +365,10 @@ impl<'m> OsuPP<'m> {
 
         // Penalize misses
         if effective_miss_count > 0.0 {
-            let miss_penalty = self.calculate_miss_penalty(effective_miss_count);
+            let miss_penalty = self.calculate_miss_penalty(
+                effective_miss_count,
+                attributes.speed_difficult_strain_count
+            );
             speed_value *= miss_penalty;
         }
 
@@ -447,7 +453,7 @@ impl<'m> OsuPP<'m> {
     ) -> f32 {
         0.96 / ((effective_miss_count / (4.0 * difficult_strain_count.ln().powf(0.94))) + 1.0)
     }
-    
+
     #[inline]
     fn calculate_effective_miss_count(&self) -> f32 {
         let mut combo_based_miss_count = 0.0;
