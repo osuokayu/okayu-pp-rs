@@ -440,13 +440,14 @@ impl<'m> OsuPP<'m> {
     }
 
     #[inline]
-    fn calculate_miss_penalty(&self, effective_miss_count: f32) -> f32 {
-        let total_hits = self.total_hits() as f32;
-
-        0.97 * (1.0 - (effective_miss_count / total_hits).powf(0.5))
-            .powf(1.0 + (effective_miss_count / 1.5))
+    fn calculate_miss_penalty(
+        &self,
+        effective_miss_count: f32,
+        difficult_strain_count: f32,
+    ) -> f32 {
+        0.96 / ((effective_miss_count / (4.0 * difficult_strain_count.ln().powf(0.94))) + 1.0)
     }
-
+    
     #[inline]
     fn calculate_effective_miss_count(&self) -> f32 {
         let mut combo_based_miss_count = 0.0;
