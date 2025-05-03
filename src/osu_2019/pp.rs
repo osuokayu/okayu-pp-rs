@@ -276,7 +276,8 @@ impl<'m> OsuPP<'m> {
             + speed_value.powf(0.83 * acc_depression)
             + acc_value.powf(1.14))
         .powf(1.0 / 1.1)
-            * multiplier;
+            * multiplier
+            * 0.9;
 
         OsuPerformanceAttributes {
             difficulty: self.attributes.unwrap(),
