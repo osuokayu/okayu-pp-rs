@@ -276,10 +276,9 @@ impl<'m> OsuPP<'m> {
             + speed_value.powf(0.83 * acc_depression)
             + acc_value.powf(1.14))
         .powf(1.0 / 1.1)
-            * multiplier
-            * 0.9;
+            * multiplier;
 
-        OsuPerformanceAttributes {
+            OsuPerformanceAttributes {
             difficulty: self.attributes.unwrap(),
             pp_aim: aim_value as f64,
             pp_speed: speed_value as f64,
@@ -345,7 +344,7 @@ impl<'m> OsuPP<'m> {
         }
 
         // Scale with accuracy
-        aim_value *= self.acc.unwrap().powf(2.0);
+        aim_value *= self.acc.unwrap().powf(2.0) * 0.85;
         aim_value *= 0.98 + attributes.od as f32 * attributes.od as f32 / 2500.0;
 
         aim_value
