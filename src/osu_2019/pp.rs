@@ -344,7 +344,7 @@ impl<'m> OsuPP<'m> {
         }
 
         // Scale with accuracy
-        aim_value *= self.acc.unwrap().powf(2.0) * 0.85;
+        aim_value *= self.acc.unwrap().powf(1.5) * 0.85;
         aim_value *= 0.98 + attributes.od as f32 * attributes.od as f32 / 2500.0;
 
         aim_value
