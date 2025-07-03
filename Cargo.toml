@@ -1,11 +1,11 @@
 [package]
 name = "akatsuki-pp"
-version = "1.1.3"
+version = "1.1.4"
 edition = "2021"
 authors = ["MaxOhn <ohn.m@hotmail.de>", "tsunyoku <tsunyoku@gmail.com>", "Aochi <me@aochi.uk>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/osuAkatsuki/akatsuki-pp-rs"
+repository = "https://github.com/RealistikOsu/akatsuki-pp-rs"
 description = "Difficulty and performance calculation for osu!"
 keywords = ["osu", "pp", "stars", "performance", "difficulty"]
 
@@ -16,11 +16,11 @@ sync = []
 tracing = ["rosu-map/tracing"]
 
 [dependencies]
-rosu-map = { version = "0.2.0" }
-rosu-mods = { version = "0.2.0" }
+rosu-map = { version = "0.2.1" }
+rosu-mods = { version = "0.3.0" }
 
 [dev-dependencies]
-proptest = "1.4.0"
+proptest = "1.6.0"
 
 [profile.test.package.proptest]
 opt-level = 3
