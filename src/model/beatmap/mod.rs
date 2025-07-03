@@ -62,6 +62,7 @@ pub struct Beatmap {
     // HitObjects
     pub hit_objects: Vec<HitObject>,
     pub hit_sounds: Vec<HitSoundType>,
+
 }
 
 impl Beatmap {

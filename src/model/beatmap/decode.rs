@@ -40,6 +40,7 @@ pub struct BeatmapState {
     effect_points: Vec<EffectPoint>,
     hit_objects: Vec<HitObject>,
     hit_sounds: Vec<HitSoundType>,
+    metadata: Option<rosu_map::section::metadata::Metadata>,
 
     pending_control_points_time: f64,
     pending_timing_point: Option<TimingPoint>,
@@ -260,6 +261,7 @@ impl DecodeState for BeatmapState {
             effect_points: Vec::with_capacity(32),
             hit_objects: Vec::with_capacity(512),
             hit_sounds: Vec::with_capacity(512),
+            metadata: None,
             pending_control_points_time: 0.0,
             pending_timing_point: None,
             pending_difficulty_point: None,

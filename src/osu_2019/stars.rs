@@ -33,8 +33,6 @@ pub fn stars(
         ar: map_attributes.ar,
         od: map_attributes.od,
         cs: map_attributes.cs,
-        beatmap_id: map.beatmap_id,
-        beatmap_creator: map.creator.clone(),
         ..Default::default()
     };
 
@@ -164,8 +162,6 @@ pub struct OsuDifficultyAttributes {
     pub max_combo: usize,
     pub aim_difficult_strain_count: f32,
     pub speed_difficult_strain_count: f32,
-    pub beatmap_id: i32,
-    pub beatmap_creator: String,
 }
 
 #[derive(Clone, Debug)]
