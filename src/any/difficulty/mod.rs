@@ -29,10 +29,14 @@ use crate::model::mode::IGameMode;
 ///
 /// ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 /// use okayu_pp::{Beatmap, Difficulty, any::DifficultyAttributes};
 =======
 /// use akatsuki_pp::{Beatmap, Difficulty, any::DifficultyAttributes};
 >>>>>>> 42db299 (meow)
+=======
+/// use okayu_pp::{Beatmap, Difficulty, any::DifficultyAttributes};
+>>>>>>> 0929f74 (change akatsuki to okayu)
 ///
 /// let map = Beatmap::from_path("./resources/2118524.osu").unwrap();
 ///

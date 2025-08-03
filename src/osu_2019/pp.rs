@@ -7,12 +7,17 @@ use crate::{Beatmap, GameMods};
 ///
 /// ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 /// # use okayu_pp::Beatmap;
 /// # use okayu_pp::osu_2019::OsuPP;
 =======
 /// # use akatsuki_pp::Beatmap;
 /// # use akatsuki_pp::osu_2019::OsuPP;
 >>>>>>> 42db299 (meow)
+=======
+/// # use okayu_pp::Beatmap;
+/// # use okayu_pp::osu_2019::OsuPP;
+>>>>>>> 0929f74 (change akatsuki to okayu)
 /// # /*
 /// let map: Beatmap = ...
 /// # */

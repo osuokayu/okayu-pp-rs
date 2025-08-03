@@ -22,6 +22,7 @@
 //! ```
 //! // Decode the map
 <<<<<<< HEAD
+<<<<<<< HEAD
 //! let map = okayu_pp::Beatmap::from_path("./resources/2785319.osu").unwrap();
 //!
 //! // Whereas osu! simply times out on malicious maps, rosu-pp does not. To
@@ -39,6 +40,12 @@
 //! // Calculate difficulty attributes
 //! let diff_attrs = akatsuki_pp::Difficulty::new()
 >>>>>>> 42db299 (meow)
+=======
+//! let map = okayu_pp::Beatmap::from_path("./resources/2785319.osu").unwrap();
+//!
+//! // Calculate difficulty attributes
+//! let diff_attrs = okayu_pp::Difficulty::new()
+>>>>>>> 0929f74 (change akatsuki to okayu)
 //!     .mods(8 + 16) // HDHR
 //!     .calculate(&map);
 //!
@@ -46,10 +53,14 @@
 //!
 //! // Calculate performance attributes
 <<<<<<< HEAD
+<<<<<<< HEAD
 //! let perf_attrs = okayu_pp::Performance::new(diff_attrs)
 =======
 //! let perf_attrs = akatsuki_pp::Performance::new(diff_attrs)
 >>>>>>> 42db299 (meow)
+=======
+//! let perf_attrs = okayu_pp::Performance::new(diff_attrs)
+>>>>>>> 0929f74 (change akatsuki to okayu)
 //!     // To speed up the calculation, we used the previous attributes.
 //!     // **Note** that this should only be done if the map and all difficulty
 //!     // settings stay the same, otherwise the final attributes will be incorrect!
@@ -81,10 +92,14 @@
 //!
 //! ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 //! use okayu_pp::{Beatmap, GradualPerformance, Difficulty, any::ScoreState};
 =======
 //! use akatsuki_pp::{Beatmap, GradualPerformance, Difficulty, any::ScoreState};
 >>>>>>> 42db299 (meow)
+=======
+//! use okayu_pp::{Beatmap, GradualPerformance, Difficulty, any::ScoreState};
+>>>>>>> 0929f74 (change akatsuki to okayu)
 //!
 //! let map = Beatmap::from_path("./resources/1028484.osu").unwrap();
 //!

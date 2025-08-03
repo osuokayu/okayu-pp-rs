@@ -33,10 +33,14 @@ pub mod rosu_mods {
 ///
 /// ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 /// use okayu_pp::GameMods;
 =======
 /// use akatsuki_pp::GameMods;
 >>>>>>> 42db299 (meow)
+=======
+/// use okayu_pp::GameMods;
+>>>>>>> 0929f74 (change akatsuki to okayu)
 /// use rosu_mods::{GameModsIntermode, GameModsLegacy, GameMods as GameModsLazer};
 ///
 /// let int = GameMods::from(64 + 8);

@@ -34,12 +34,17 @@ use super::{
 ///
 /// ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 /// use okayu_pp::{Beatmap, Difficulty};
 /// use okayu_pp::taiko::{Taiko, TaikoGradualDifficulty};
 =======
 /// use akatsuki_pp::{Beatmap, Difficulty};
 /// use akatsuki_pp::taiko::{Taiko, TaikoGradualDifficulty};
 >>>>>>> 42db299 (meow)
+=======
+/// use okayu_pp::{Beatmap, Difficulty};
+/// use okayu_pp::taiko::{Taiko, TaikoGradualDifficulty};
+>>>>>>> 0929f74 (change akatsuki to okayu)
 ///
 /// let map = Beatmap::from_path("./resources/1028484.osu").unwrap();
 ///

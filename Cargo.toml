@@ -1,5 +1,6 @@
 [package]
 <<<<<<< HEAD
+<<<<<<< HEAD
 name = "okayu-pp"
 version = "1.1.5"
 edition = "2021"
@@ -9,13 +10,20 @@ readme = "README.md"
 repository = "https://github.com/osuokayu/okayu-pp-rs"
 =======
 name = "akatsuki-pp"
+=======
+name = "okayu-pp"
+>>>>>>> 0929f74 (change akatsuki to okayu)
 version = "1.1.2"
 edition = "2021"
 authors = ["MaxOhn <ohn.m@hotmail.de>", "tsunyoku <tsunyoku@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+<<<<<<< HEAD
 repository = "https://github.com/osuAkatsuki/akatsuki-pp-rs"
 >>>>>>> 42db299 (meow)
+=======
+repository = "https://github.com/osuokayu/okayu-pp-rs"
+>>>>>>> 0929f74 (change akatsuki to okayu)
 description = "Difficulty and performance calculation for osu!"
 keywords = ["osu", "pp", "stars", "performance", "difficulty"]
 

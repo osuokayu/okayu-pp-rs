@@ -1,10 +1,14 @@
 use std::panic::{self, UnwindSafe};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 use okayu_pp::{
 =======
 use akatsuki_pp::{
 >>>>>>> 42db299 (meow)
+=======
+use okayu_pp::{
+>>>>>>> 0929f74 (change akatsuki to okayu)
     catch::{Catch, CatchDifficultyAttributes},
     mania::{Mania, ManiaDifficultyAttributes},
     osu::{Osu, OsuDifficultyAttributes},

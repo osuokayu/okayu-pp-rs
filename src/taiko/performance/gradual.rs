@@ -22,12 +22,17 @@ use super::TaikoPerformanceAttributes;
 ///
 /// ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 /// use okayu_pp::{Beatmap, Difficulty};
 /// use okayu_pp::taiko::{Taiko, TaikoGradualPerformance, TaikoScoreState};
 =======
 /// use akatsuki_pp::{Beatmap, Difficulty};
 /// use akatsuki_pp::taiko::{Taiko, TaikoGradualPerformance, TaikoScoreState};
 >>>>>>> 42db299 (meow)
+=======
+/// use okayu_pp::{Beatmap, Difficulty};
+/// use okayu_pp::taiko::{Taiko, TaikoGradualPerformance, TaikoScoreState};
+>>>>>>> 0929f74 (change akatsuki to okayu)
 ///
 /// let map = Beatmap::from_path("./resources/1028484.osu").unwrap();
 ///

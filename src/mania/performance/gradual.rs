@@ -18,12 +18,17 @@ use super::{ManiaPerformanceAttributes, ManiaScoreState};
 ///
 /// ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 /// use okayu_pp::{Beatmap, Difficulty};
 /// use okayu_pp::mania::{Mania, ManiaGradualPerformance, ManiaScoreState};
 =======
 /// use akatsuki_pp::{Beatmap, Difficulty};
 /// use akatsuki_pp::mania::{Mania, ManiaGradualPerformance, ManiaScoreState};
 >>>>>>> 42db299 (meow)
+=======
+/// use okayu_pp::{Beatmap, Difficulty};
+/// use okayu_pp::mania::{Mania, ManiaGradualPerformance, ManiaScoreState};
+>>>>>>> 0929f74 (change akatsuki to okayu)
 ///
 /// let map = Beatmap::from_path("./resources/1638954.osu").unwrap();
 ///

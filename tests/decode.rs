@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 use okayu_pp::{model::mode::GameMode, Beatmap, GameMods};
 =======
 use akatsuki_pp::{model::mode::GameMode, Beatmap, GameMods};
 >>>>>>> 42db299 (meow)
+=======
+use okayu_pp::{model::mode::GameMode, Beatmap, GameMods};
+>>>>>>> 0929f74 (change akatsuki to okayu)
 
 use crate::common::assert_eq_float;
 
