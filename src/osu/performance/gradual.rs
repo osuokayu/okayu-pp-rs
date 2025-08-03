@@ -17,8 +17,8 @@ use super::{OsuPerformanceAttributes, OsuScoreState};
 /// # Example
 ///
 /// ```
-/// use okayu_pp::{Beatmap, Difficulty};
-/// use okayu_pp::osu::{Osu, OsuGradualPerformance, OsuScoreState};
+/// use akatsuki_pp::{Beatmap, Difficulty};
+/// use akatsuki_pp::osu::{Osu, OsuGradualPerformance, OsuScoreState};
 ///
 /// let map = Beatmap::from_path("./resources/2785319.osu").unwrap();
 ///
