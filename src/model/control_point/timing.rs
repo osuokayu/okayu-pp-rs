@@ -9,18 +9,25 @@ impl TimingPoint {
     pub const DEFAULT_BEAT_LEN: f64 =
         rosu_map::section::timing_points::TimingPoint::DEFAULT_BEAT_LEN;
 
+<<<<<<< HEAD
     pub const DEFAULT_BPM: f64 = 60_000.0 / Self::DEFAULT_BEAT_LEN;
 
     pub const fn new(time: f64, beat_len: f64) -> Self {
+=======
+    pub fn new(time: f64, beat_len: f64) -> Self {
+>>>>>>> 42db299 (meow)
         Self {
             time,
             beat_len: beat_len.clamp(6.0, 60_000.0),
         }
     }
+<<<<<<< HEAD
 
     pub const fn bpm(&self) -> f64 {
         60_000.0 / self.beat_len
     }
+=======
+>>>>>>> 42db299 (meow)
 }
 
 impl Default for TimingPoint {

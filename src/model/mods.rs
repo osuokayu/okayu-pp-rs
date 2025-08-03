@@ -7,6 +7,7 @@ use rosu_mods::{
     GameMod, GameModIntermode, GameMods as GameModsLazer, GameModsIntermode, GameModsLegacy,
 };
 
+<<<<<<< HEAD
 /// Re-exported [`rosu_mods`].
 pub mod rosu_mods {
     pub use rosu_mods::*;
@@ -16,6 +17,12 @@ pub mod rosu_mods {
 ///
 /// A convenient way to create [`GameMods`] is through its `From<T>`
 /// implementations where `T` can be
+=======
+/// Collection of game mods.
+///
+/// This type can be created through its `From<T>` implementations where `T`
+/// can be
+>>>>>>> 42db299 (meow)
 /// - `u32`
 /// - [`rosu_mods::GameModsLegacy`]
 /// - [`rosu_mods::GameMods`]
@@ -25,7 +32,11 @@ pub mod rosu_mods {
 /// # Example
 ///
 /// ```
+<<<<<<< HEAD
 /// use okayu_pp::GameMods;
+=======
+/// use akatsuki_pp::GameMods;
+>>>>>>> 42db299 (meow)
 /// use rosu_mods::{GameModsIntermode, GameModsLegacy, GameMods as GameModsLazer};
 ///
 /// let int = GameMods::from(64 + 8);
@@ -34,12 +45,34 @@ pub mod rosu_mods {
 /// let intermode = GameMods::from(GameModsIntermode::new());
 /// ```
 #[derive(Clone, PartialEq)]
+<<<<<<< HEAD
 pub enum GameMods {
+=======
+pub struct GameMods {
+    inner: GameModsInner,
+}
+
+impl Debug for GameMods {
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        match self.inner {
+            GameModsInner::Lazer(ref mods) => Debug::fmt(mods, f),
+            GameModsInner::Intermode(ref mods) => Debug::fmt(mods, f),
+            GameModsInner::Legacy(ref mods) => Debug::fmt(mods, f),
+        }
+    }
+}
+
+/// Inner type of [`GameMods`] so that remote types contained in variants don't
+/// need to be re-exported.
+#[derive(Clone, PartialEq)]
+enum GameModsInner {
+>>>>>>> 42db299 (meow)
     Lazer(GameModsLazer),
     Intermode(GameModsIntermode),
     Legacy(GameModsLegacy),
 }
 
+<<<<<<< HEAD
 impl Debug for GameMods {
     fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
         match self {
@@ -52,12 +85,19 @@ impl Debug for GameMods {
 
 impl GameMods {
     pub(crate) const DEFAULT: Self = Self::Legacy(GameModsLegacy::NoMod);
+=======
+impl GameMods {
+    pub(crate) const DEFAULT: Self = Self {
+        inner: GameModsInner::Legacy(GameModsLegacy::NoMod),
+    };
+>>>>>>> 42db299 (meow)
 
     /// Returns the mods' clock rate.
     ///
     /// In case of variable clock rates like for `WindUp`, this will return
     /// `1.0`.
     pub(crate) fn clock_rate(&self) -> f64 {
+<<<<<<< HEAD
         match self {
             Self::Lazer(ref mods) => mods
                 .iter()
@@ -76,6 +116,12 @@ impl GameMods {
                 .unwrap_or(1.0),
             Self::Intermode(ref mods) => mods.legacy_clock_rate(),
             Self::Legacy(mods) => mods.clock_rate(),
+=======
+        match self.inner {
+            GameModsInner::Lazer(ref mods) => mods.clock_rate().unwrap_or(1.0),
+            GameModsInner::Intermode(ref mods) => mods.legacy_clock_rate(),
+            GameModsInner::Legacy(mods) => mods.clock_rate(),
+>>>>>>> 42db299 (meow)
         }
     }
 
@@ -92,15 +138,24 @@ impl GameMods {
     /// Check whether the mods enable `hardrock_offsets`.
     pub(crate) fn hardrock_offsets(&self) -> bool {
         fn custom_hardrock_offsets(mods: &GameMods) -> Option<bool> {
+<<<<<<< HEAD
             match mods {
                 GameMods::Lazer(ref mods) => mods.iter().find_map(|gamemod| match gamemod {
+=======
+            match mods.inner {
+                GameModsInner::Lazer(ref mods) => mods.iter().find_map(|gamemod| match gamemod {
+>>>>>>> 42db299 (meow)
                     GameMod::DifficultyAdjustCatch(DifficultyAdjustCatch {
                         hard_rock_offsets,
                         ..
                     }) => *hard_rock_offsets,
                     _ => None,
                 }),
+<<<<<<< HEAD
                 GameMods::Intermode(_) | GameMods::Legacy(_) => None,
+=======
+                GameModsInner::Intermode(_) | GameModsInner::Legacy(_) => None,
+>>>>>>> 42db299 (meow)
             }
         }
 
@@ -108,20 +163,33 @@ impl GameMods {
     }
 
     pub(crate) fn no_slider_head_acc(&self, lazer: bool) -> bool {
+<<<<<<< HEAD
         match self {
             Self::Lazer(ref mods) => mods
+=======
+        match self.inner {
+            GameModsInner::Lazer(ref mods) => mods
+>>>>>>> 42db299 (meow)
                 .iter()
                 .find_map(|m| match m {
                     GameMod::ClassicOsu(cl) => Some(cl.no_slider_head_accuracy.unwrap_or(true)),
                     _ => None,
                 })
                 .unwrap_or(!lazer),
+<<<<<<< HEAD
             Self::Intermode(ref mods) => mods.contains(GameModIntermode::Classic) || !lazer,
             Self::Legacy(_) => !lazer,
+=======
+            GameModsInner::Intermode(ref mods) => {
+                mods.contains(GameModIntermode::Classic) || !lazer
+            }
+            GameModsInner::Legacy(_) => !lazer,
+>>>>>>> 42db299 (meow)
         }
     }
 
     pub(crate) fn reflection(&self) -> Reflection {
+<<<<<<< HEAD
         match self {
             Self::Lazer(ref mods) => mods
                 .iter()
@@ -138,13 +206,39 @@ impl GameMods {
                 })
                 .unwrap_or(Reflection::None),
             Self::Intermode(ref mods) => {
+=======
+        match self.inner {
+            GameModsInner::Lazer(ref mods) => {
+                if mods.contains_intermode(GameModIntermode::HardRock) {
+                    return Reflection::Vertical;
+                }
+
+                mods.iter()
+                    .find_map(|m| match m {
+                        GameMod::MirrorOsu(mr) => match mr.reflection.as_deref() {
+                            None => Some(Reflection::Horizontal),
+                            Some("1") => Some(Reflection::Vertical),
+                            Some("2") => Some(Reflection::Both),
+                            Some(_) => Some(Reflection::None),
+                        },
+                        GameMod::MirrorCatch(_) => Some(Reflection::Horizontal),
+                        _ => None,
+                    })
+                    .unwrap_or(Reflection::None)
+            }
+            GameModsInner::Intermode(ref mods) => {
+>>>>>>> 42db299 (meow)
                 if mods.contains(GameModIntermode::HardRock) {
                     Reflection::Vertical
                 } else {
                     Reflection::None
                 }
             }
+<<<<<<< HEAD
             Self::Legacy(mods) => {
+=======
+            GameModsInner::Legacy(mods) => {
+>>>>>>> 42db299 (meow)
                 if mods.contains(GameModsLegacy::HardRock) {
                     Reflection::Vertical
                 } else {
@@ -155,8 +249,13 @@ impl GameMods {
     }
 
     pub(crate) fn mania_keys(&self) -> Option<f32> {
+<<<<<<< HEAD
         match self {
             Self::Lazer(ref mods) => {
+=======
+        match self.inner {
+            GameModsInner::Lazer(ref mods) => {
+>>>>>>> 42db299 (meow)
                 if mods.contains_intermode(GameModIntermode::OneKey) {
                     Some(1.0)
                 } else if mods.contains_intermode(GameModIntermode::TwoKeys) {
@@ -181,7 +280,11 @@ impl GameMods {
                     None
                 }
             }
+<<<<<<< HEAD
             Self::Intermode(ref mods) => {
+=======
+            GameModsInner::Intermode(ref mods) => {
+>>>>>>> 42db299 (meow)
                 if mods.contains(GameModIntermode::OneKey) {
                     Some(1.0)
                 } else if mods.contains(GameModIntermode::TwoKeys) {
@@ -206,7 +309,11 @@ impl GameMods {
                     None
                 }
             }
+<<<<<<< HEAD
             Self::Legacy(ref mods) => {
+=======
+            GameModsInner::Legacy(ref mods) => {
+>>>>>>> 42db299 (meow)
                 if mods.contains(GameModsLegacy::Key1) {
                     Some(1.0)
                 } else if mods.contains(GameModsLegacy::Key2) {
@@ -231,6 +338,7 @@ impl GameMods {
             }
         }
     }
+<<<<<<< HEAD
 
     pub(crate) fn scroll_speed(&self) -> Option<f64> {
         let Self::Lazer(mods) = self else { return None };
@@ -256,6 +364,8 @@ impl GameMods {
             })
             .map(|seed| seed as i32)
     }
+=======
+>>>>>>> 42db299 (meow)
 }
 
 macro_rules! impl_map_attr {
@@ -266,22 +376,38 @@ macro_rules! impl_map_attr {
                 #[doc = $s]
                 #[doc = "value."]
                 pub(crate) fn $fn(&self) -> Option<f64> {
+<<<<<<< HEAD
                     match self {
                         Self::Lazer(ref mods) => mods.iter().find_map(|gamemod| match gamemod {
                             $( impl_map_attr!( @ $mode $field) => *$field, )*
                             _ => None,
                         }),
                         Self::Intermode(_) | Self::Legacy(_) => None,
+=======
+                    match self.inner {
+                        GameModsInner::Lazer(ref mods) => mods.iter().find_map(|gamemod| match gamemod {
+                            $( impl_map_attr!( @ $mode $field) => *$field, )*
+                            _ => None,
+                        }),
+                        GameModsInner::Intermode(_) | GameModsInner::Legacy(_) => None,
+>>>>>>> 42db299 (meow)
                     }
                 }
             )*
         }
     };
 
+<<<<<<< HEAD
     ( @ Osu $field:ident ) => { GameMod::DifficultyAdjustOsu(DifficultyAdjustOsu { $field, .. }) };
     ( @ Taiko $field:ident ) => { GameMod::DifficultyAdjustTaiko(DifficultyAdjustTaiko { $field, .. }) };
     ( @ Catch $field:ident ) => { GameMod::DifficultyAdjustCatch(DifficultyAdjustCatch { $field, .. }) };
     ( @ Mania $field:ident ) => { GameMod::DifficultyAdjustMania(DifficultyAdjustMania { $field, .. }) };
+=======
+    ( @ Osu $field:ident) => { GameMod::DifficultyAdjustOsu(DifficultyAdjustOsu { $field, .. }) };
+    ( @ Taiko $field:ident) => { GameMod::DifficultyAdjustTaiko(DifficultyAdjustTaiko { $field, .. }) };
+    ( @ Catch $field:ident) => { GameMod::DifficultyAdjustCatch(DifficultyAdjustCatch { $field, .. }) };
+    ( @ Mania $field:ident) => { GameMod::DifficultyAdjustMania(DifficultyAdjustMania { $field, .. }) };
+>>>>>>> 42db299 (meow)
 }
 
 impl_map_attr! {
@@ -292,7 +418,11 @@ impl_map_attr! {
 }
 
 macro_rules! impl_has_mod {
+<<<<<<< HEAD
     ( $( $fn:ident: $is_legacy:tt $name:ident [ $s:literal ], )* ) => {
+=======
+    ( $( $fn:ident: $sign:tt $name:ident [ $s:literal ], )* ) => {
+>>>>>>> 42db299 (meow)
         impl GameMods {
             $(
                 // workaround for <https://github.com/rust-lang/rust-analyzer/issues/8092>
@@ -300,6 +430,7 @@ macro_rules! impl_has_mod {
                 #[doc = $s]
                 #[doc = "`."]
                 pub(crate) fn $fn(&self) -> bool {
+<<<<<<< HEAD
                     match self {
                         Self::Lazer(ref mods) => {
                             mods.contains_intermode(GameModIntermode::$name)
@@ -309,6 +440,17 @@ macro_rules! impl_has_mod {
                         },
                         Self::Legacy(_mods) => {
                             impl_has_mod!(LEGACY $is_legacy $name _mods)
+=======
+                    match self.inner {
+                        GameModsInner::Lazer(ref mods) => {
+                            mods.contains_intermode(GameModIntermode::$name)
+                        },
+                        GameModsInner::Intermode(ref mods) => {
+                            mods.contains(GameModIntermode::$name)
+                        },
+                        GameModsInner::Legacy(_mods) => {
+                            impl_has_mod!(LEGACY $sign $name _mods)
+>>>>>>> 42db299 (meow)
                         },
                     }
                 }
@@ -334,11 +476,19 @@ impl_has_mod! {
     rx: + Relax ["Relax"],
     fl: + Flashlight ["Flashlight"],
     so: + SpunOut ["SpunOut"],
+<<<<<<< HEAD
     ap: + Autopilot ["Autopilot"],
     bl: - Blinds ["Blinds"],
     cl: - Classic ["Classic"],
     invert: - Invert ["Invert"],
     ho: - HoldOff ["HoldOff"],
+=======
+    dt: + DoubleTime ["DoubleTime"],
+    nc: + Nightcore ["Nightcore"],
+    ht: + HalfTime ["HalfTime"],
+    ap: + Autopilot ["Autopilot"],
+    bl: - Blinds ["Blinds"],
+>>>>>>> 42db299 (meow)
     tc: - Traceable ["Traceable"],
 }
 
@@ -350,13 +500,25 @@ impl Default for GameMods {
 
 impl From<GameModsLazer> for GameMods {
     fn from(mods: GameModsLazer) -> Self {
+<<<<<<< HEAD
         Self::Lazer(mods)
+=======
+        Self {
+            inner: GameModsInner::Lazer(mods),
+        }
+>>>>>>> 42db299 (meow)
     }
 }
 
 impl From<GameModsIntermode> for GameMods {
     fn from(mods: GameModsIntermode) -> Self {
+<<<<<<< HEAD
         Self::Intermode(mods)
+=======
+        Self {
+            inner: GameModsInner::Intermode(mods),
+        }
+>>>>>>> 42db299 (meow)
     }
 }
 
@@ -373,7 +535,13 @@ impl From<&GameModsIntermode> for GameMods {
 
 impl From<GameModsLegacy> for GameMods {
     fn from(mods: GameModsLegacy) -> Self {
+<<<<<<< HEAD
         Self::Legacy(mods)
+=======
+        Self {
+            inner: GameModsInner::Legacy(mods),
+        }
+>>>>>>> 42db299 (meow)
     }
 }
 
@@ -384,7 +552,11 @@ impl From<u32> for GameMods {
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
+<<<<<<< HEAD
 pub(crate) enum Reflection {
+=======
+pub enum Reflection {
+>>>>>>> 42db299 (meow)
     None,
     Vertical,
     Horizontal,

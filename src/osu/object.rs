@@ -134,6 +134,7 @@ impl OsuObject {
         }
     }
 
+<<<<<<< HEAD
     pub const fn stacked_pos(&self) -> Pos {
         // Performed manually for const-ness
         // self.pos + self.stack_offset
@@ -142,6 +143,10 @@ impl OsuObject {
             self.pos.x + self.stack_offset.x,
             self.pos.y + self.stack_offset.y,
         )
+=======
+    pub fn stacked_pos(&self) -> Pos {
+        self.pos + self.stack_offset
+>>>>>>> 42db299 (meow)
     }
 
     pub fn end_pos(&self) -> Pos {

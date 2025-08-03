@@ -28,7 +28,11 @@ use crate::model::mode::IGameMode;
 /// # Example
 ///
 /// ```
+<<<<<<< HEAD
 /// use okayu_pp::{Beatmap, Difficulty, any::DifficultyAttributes};
+=======
+/// use akatsuki_pp::{Beatmap, Difficulty, any::DifficultyAttributes};
+>>>>>>> 42db299 (meow)
 ///
 /// let map = Beatmap::from_path("./resources/2118524.osu").unwrap();
 ///
@@ -385,7 +389,11 @@ impl Difficulty {
     }
 }
 
+<<<<<<< HEAD
 const fn non_zero_u64_to_f64(n: NonZeroU64) -> f64 {
+=======
+fn non_zero_u64_to_f64(n: NonZeroU64) -> f64 {
+>>>>>>> 42db299 (meow)
     f64::from_bits(n.get())
 }
 

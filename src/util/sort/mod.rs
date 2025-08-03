@@ -51,7 +51,11 @@ where
     }
 }
 
+<<<<<<< HEAD
 const fn swap<T>(keys: &mut [T], i: usize, j: usize) {
+=======
+fn swap<T>(keys: &mut [T], i: usize, j: usize) {
+>>>>>>> 42db299 (meow)
     if i != j {
         keys.swap(i, j);
     }

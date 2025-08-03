@@ -3,7 +3,11 @@ use rosu_map::section::hit_objects::hit_samples::HitSoundType;
 use crate::{
     mania::convert::{pattern::Pattern, pattern_type::PatternType},
     model::hit_object::HitObject,
+<<<<<<< HEAD
     util::random::osu::Random,
+=======
+    util::random::Random,
+>>>>>>> 42db299 (meow)
     Beatmap,
 };
 

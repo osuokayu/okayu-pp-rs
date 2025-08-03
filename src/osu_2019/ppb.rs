@@ -6,13 +6,8 @@ use crate::{Beatmap, GameMods};
 /// # Example
 ///
 /// ```
-<<<<<<< HEAD
-/// # use okayu_pp::Beatmap;
-/// # use okayu_pp::osu_2019::OsuPP;
-=======
 /// # use akatsuki_pp::Beatmap;
 /// # use akatsuki_pp::osu_2019::OsuPP;
->>>>>>> 42db299 (meow)
 /// # /*
 /// let map: Beatmap = ...
 /// # */
@@ -136,11 +131,7 @@ impl<'m> OsuPP<'m> {
 
     #[inline]
     pub fn passed_objects(mut self, passed_objects: u32) -> Self {
-<<<<<<< HEAD
-        self.passed_objects.replace(passed_objects);
-=======
         self.passed_objects = self.passed_objects.replace(passed_objects);
->>>>>>> 42db299 (meow)
 
         self
     }
@@ -274,31 +265,20 @@ impl<'m> OsuPP<'m> {
 
         if streams_nerf < 1.09 {
             let acc_factor = (1.0 - self.acc.unwrap()).abs();
-            acc_depression = (0.86 - acc_factor).max(0.5);
+            acc_depression = (0.85 - acc_factor).max(0.5);
 
             if acc_depression > 0.0 {
                 aim_value *= acc_depression;
             }
         }
 
-<<<<<<< HEAD
-        let pp = (aim_value.powf(1.2)
-            + speed_value.powf(0.84 * acc_depression)
-            + acc_value.powf(1.18))
-        .powf(1.0 / 1.1)
-            * multiplier
-            * 0.9;
-
-            OsuPerformanceAttributes {
-=======
-        let pp = (aim_value.powf(1.19)
-            + speed_value.powf(0.82 * acc_depression)
-            + acc_value.powf(1.18))
+        let pp = (aim_value.powf(1.18)
+            + speed_value.powf(0.88 * acc_depression)
+            + acc_value.powf(1.15))
         .powf(1.0 / 1.1)
             * multiplier;
 
         OsuPerformanceAttributes {
->>>>>>> 42db299 (meow)
             difficulty: self.attributes.unwrap(),
             pp_aim: aim_value as f64,
             pp_speed: speed_value as f64,
@@ -320,44 +300,21 @@ impl<'m> OsuPP<'m> {
 
         let mut aim_value = (5.0 * (raw_aim / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
-<<<<<<< HEAD
-        // Shorter maps are worth less
-        let mut len_bonus = 0.88
-            + 0.4 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f32 * 0.5 * (total_hits / 2000.0).log10();
-
-        if len_bonus > 1.0 {
-            len_bonus = len_bonus.powf(0.88);
-        }
-
-=======
         // Longer maps are worth more
         let len_bonus = 0.88
             + 0.4 * (total_hits / 2000.0).min(1.0)
             + (total_hits > 2000.0) as u8 as f32 * 0.5 * (total_hits / 2000.0).log10();
->>>>>>> 42db299 (meow)
         aim_value *= len_bonus;
 
         // Penalize misses
         if effective_miss_count > 0.0 {
-<<<<<<< HEAD
-            let miss_penalty = self.calculate_miss_penalty(
-                effective_miss_count,
-                attributes.aim_difficult_strain_count
-            );
-=======
             let miss_penalty = self.calculate_miss_penalty(effective_miss_count);
->>>>>>> 42db299 (meow)
             aim_value *= miss_penalty;
         }
 
         // AR bonus
         let mut ar_factor = if attributes.ar > 10.33 {
-<<<<<<< HEAD
-            0.15 * (attributes.ar - 10.33)
-=======
-            0.3 * (attributes.ar - 10.33)
->>>>>>> 42db299 (meow)
+            0.35 * (attributes.ar - 10.33)
         } else {
             0.0
         };
@@ -384,11 +341,7 @@ impl<'m> OsuPP<'m> {
         }
 
         // Scale with accuracy
-<<<<<<< HEAD
-        aim_value *= self.acc.unwrap().powf(1.5) * 0.85;
-=======
         aim_value *= 0.3 + self.acc.unwrap() / 2.0;
->>>>>>> 42db299 (meow)
         aim_value *= 0.98 + attributes.od as f32 * attributes.od as f32 / 2500.0;
 
         aim_value
@@ -400,50 +353,24 @@ impl<'m> OsuPP<'m> {
         let mut speed_value =
             (5.0 * (attributes.speed_strain as f32 / 0.0675).max(1.0) - 4.0).powi(3) / 100_000.0;
 
-<<<<<<< HEAD
-        // Shorter maps are worth less
-        let mut len_bonus = 0.88
-            + 0.4 * (total_hits / 2000.0).min(1.0)
-            + (total_hits > 2000.0) as u8 as f32 * 0.5 * (total_hits / 2000.0).log10();
-
-        if len_bonus > 1.0 {
-            len_bonus = len_bonus.powf(0.88);
-        } 
-
-
-=======
         // Longer maps are worth more
         let len_bonus = 0.88
             + 0.4 * (total_hits / 2000.0).min(1.0)
             + (total_hits > 2000.0) as u8 as f32 * 0.5 * (total_hits / 2000.0).log10();
->>>>>>> 42db299 (meow)
         speed_value *= len_bonus;
 
         // Penalize misses
         if effective_miss_count > 0.0 {
-<<<<<<< HEAD
-            let miss_penalty = self.calculate_miss_penalty(
-                effective_miss_count,
-                attributes.speed_difficult_strain_count
-            );
-=======
             let miss_penalty = self.calculate_miss_penalty(effective_miss_count);
->>>>>>> 42db299 (meow)
             speed_value *= miss_penalty;
         }
 
         // AR bonus
         if attributes.ar > 10.33 {
             let mut ar_factor = if attributes.ar > 10.33 {
-<<<<<<< HEAD
-                0.15 * (attributes.ar - 10.33)
-            } else {
-                0.15
-=======
-                0.3 * (attributes.ar - 10.33)
+                0.35 * (attributes.ar - 10.33)
             } else {
                 0.0
->>>>>>> 42db299 (meow)
             };
 
             if attributes.ar < 8.0 {
@@ -459,7 +386,7 @@ impl<'m> OsuPP<'m> {
         }
 
         // Scaling the speed value with accuracy and OD
-        speed_value *= (0.93 + attributes.od as f32 * attributes.od as f32 / 750.0)
+        speed_value *= (0.96 + attributes.od as f32 * attributes.od as f32 / 750.0)
             * self
                 .acc
                 .unwrap()
@@ -512,20 +439,11 @@ impl<'m> OsuPP<'m> {
     }
 
     #[inline]
-<<<<<<< HEAD
-    fn calculate_miss_penalty(
-        &self,
-        effective_miss_count: f32,
-        difficult_strain_count: f32,
-    ) -> f32 {
-        0.96 / ((effective_miss_count / (4.0 * difficult_strain_count.ln().powf(0.94))) + 1.0)
-=======
     fn calculate_miss_penalty(&self, effective_miss_count: f32) -> f32 {
         let total_hits = self.total_hits() as f32;
 
         0.97 * (1.0 - (effective_miss_count / total_hits).powf(0.5))
             .powf(1.0 + (effective_miss_count / 1.5))
->>>>>>> 42db299 (meow)
     }
 
     #[inline]
@@ -581,8 +499,4 @@ impl OsuAttributeProvider for OsuPerformanceAttributes {
     fn attributes(self) -> Option<OsuDifficultyAttributes> {
         Some(self.difficulty)
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 42db299 (meow)

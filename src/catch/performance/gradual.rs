@@ -22,8 +22,13 @@ use crate::{
 /// # Example
 ///
 /// ```
+<<<<<<< HEAD
 /// use okayu_pp::{Beatmap, Difficulty};
 /// use okayu_pp::catch::{Catch, CatchGradualPerformance, CatchScoreState};
+=======
+/// use akatsuki_pp::{Beatmap, Difficulty};
+/// use akatsuki_pp::catch::{Catch, CatchGradualPerformance, CatchScoreState};
+>>>>>>> 42db299 (meow)
 ///
 /// let map = Beatmap::from_path("./resources/2118524.osu").unwrap();
 ///

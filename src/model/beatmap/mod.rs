@@ -15,7 +15,10 @@ use crate::{
 pub use self::{
     attributes::{BeatmapAttributes, BeatmapAttributesBuilder, HitWindows},
     decode::{BeatmapState, ParseBeatmapError},
+<<<<<<< HEAD
     suspicious::TooSuspicious,
+=======
+>>>>>>> 42db299 (meow)
 };
 
 use super::{
@@ -30,7 +33,10 @@ use super::{
 mod attributes;
 mod bpm;
 mod decode;
+<<<<<<< HEAD
 mod suspicious;
+=======
+>>>>>>> 42db299 (meow)
 
 /// All beatmap data that is relevant for difficulty and performance
 /// calculation.
@@ -63,6 +69,11 @@ pub struct Beatmap {
     pub hit_objects: Vec<HitObject>,
     pub hit_sounds: Vec<HitSoundType>,
 
+<<<<<<< HEAD
+=======
+    pub creator: String,
+    pub beatmap_id: i32,
+>>>>>>> 42db299 (meow)
 }
 
 impl Beatmap {
@@ -156,7 +167,11 @@ impl Beatmap {
             GameMode::Catch => Catch::convert(&mut map),
             GameMode::Mania => Mania::convert(&mut map, mods),
             GameMode::Osu => unreachable!(),
+<<<<<<< HEAD
         }
+=======
+        };
+>>>>>>> 42db299 (meow)
 
         Ok(Cow::Owned(map))
     }
@@ -185,6 +200,7 @@ impl Beatmap {
 
         Ok(())
     }
+<<<<<<< HEAD
 
     /// Check whether hitobjects appear too suspicious for further calculation.
     ///
@@ -198,6 +214,8 @@ impl Beatmap {
             Some(err) => Err(err),
         }
     }
+=======
+>>>>>>> 42db299 (meow)
 }
 
 impl FromStr for Beatmap {
@@ -231,6 +249,11 @@ impl Default for Beatmap {
             effect_points: Vec::default(),
             hit_objects: Vec::default(),
             hit_sounds: Vec::default(),
+<<<<<<< HEAD
+=======
+            creator: String::default(),
+            beatmap_id: i32::default(),
+>>>>>>> 42db299 (meow)
         }
     }
 }

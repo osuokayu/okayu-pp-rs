@@ -56,7 +56,11 @@ mod consts {
 use consts::*;
 
 pub fn erf(x: f64) -> f64 {
+<<<<<<< HEAD
     if x == 0.0 {
+=======
+    if x.abs() < f64::EPSILON {
+>>>>>>> 42db299 (meow)
         return 0.0;
     }
 
@@ -76,7 +80,11 @@ pub fn erf(x: f64) -> f64 {
 }
 
 pub fn erf_inv(z: f64) -> f64 {
+<<<<<<< HEAD
     if z == 0.0 {
+=======
+    if z.abs() < f64::EPSILON {
+>>>>>>> 42db299 (meow)
         return 0.0;
     }
 
@@ -195,7 +203,11 @@ fn erf_imp(z: f64, mut invert: bool) -> f64 {
             )
         };
 
+<<<<<<< HEAD
         let g = f64::exp(-z * z) / z;
+=======
+        let g = (-z * z).exp() / z;
+>>>>>>> 42db299 (meow)
 
         (g * b) + (g * r)
     } else {

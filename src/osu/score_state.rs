@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 use crate::util::{float_ext::FloatExt, hint::unlikely};
 
 /// Aggregation for a score's current state.
 #[derive(Clone, Debug, PartialEq, Eq)]
+=======
+/// Aggregation for a score's current state.
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+>>>>>>> 42db299 (meow)
 pub struct OsuScoreState {
     /// Maximum combo that the score has had so far. **Not** the maximum
     /// possible combo of the map so far.
@@ -10,6 +15,7 @@ pub struct OsuScoreState {
     ///
     /// The meaning depends on the kind of score:
     /// - if set on osu!stable, this field is irrelevant and can be `0`
+<<<<<<< HEAD
     /// - if set on osu!lazer *with* slider accuracy, this field is the amount
     ///   of hit slider ticks and repeats
     /// - if set on osu!lazer *without* slider accuracy, this field is the
@@ -24,6 +30,13 @@ pub struct OsuScoreState {
     ///
     /// Only relevant for osu!lazer.
     pub small_tick_hits: u32,
+=======
+    /// - if set on osu!lazer *without* `CL`, this field is the amount of hit
+    ///   slider ticks and repeats
+    /// - if set on osu!lazer *with* `CL`, this field is the amount of hit
+    ///   slider heads, ticks, and repeats
+    pub large_tick_hits: u32,
+>>>>>>> 42db299 (meow)
     /// Amount of successfully hit slider ends.
     ///
     /// Only relevant for osu!lazer.
@@ -44,7 +57,10 @@ impl OsuScoreState {
         Self {
             max_combo: 0,
             large_tick_hits: 0,
+<<<<<<< HEAD
             small_tick_hits: 0,
+=======
+>>>>>>> 42db299 (meow)
             slider_end_hits: 0,
             n300: 0,
             n100: 0,
@@ -60,8 +76,13 @@ impl OsuScoreState {
 
     /// Calculate the accuracy between `0.0` and `1.0` for this state.
     pub fn accuracy(&self, origin: OsuScoreOrigin) -> f64 {
+<<<<<<< HEAD
         let mut numerator = f64::from(6 * self.n300 + 2 * self.n100 + self.n50);
         let mut denominator = f64::from(6 * (self.n300 + self.n100 + self.n50 + self.misses));
+=======
+        let mut numerator = 300 * self.n300 + 100 * self.n100 + 50 * self.n50;
+        let mut denominator = 300 * (self.n300 + self.n100 + self.n50 + self.misses);
+>>>>>>> 42db299 (meow)
 
         match origin {
             OsuScoreOrigin::Stable => {}
@@ -72,6 +93,7 @@ impl OsuScoreState {
                 let slider_end_hits = self.slider_end_hits.min(max_slider_ends);
                 let large_tick_hits = self.large_tick_hits.min(max_large_ticks);
 
+<<<<<<< HEAD
                 numerator += f64::from(3 * slider_end_hits) + 0.6 * f64::from(large_tick_hits);
                 denominator += f64::from(3 * max_slider_ends) + 0.6 * f64::from(max_large_ticks);
             }
@@ -91,6 +113,27 @@ impl OsuScoreState {
             0.0
         } else {
             numerator / denominator
+=======
+                numerator += 150 * slider_end_hits + 30 * large_tick_hits;
+                denominator += 150 * max_slider_ends + 30 * max_large_ticks;
+            }
+            OsuScoreOrigin::WithoutSliderAcc {
+                max_large_ticks,
+                max_slider_ends,
+            } => {
+                let large_tick_hits = self.large_tick_hits.min(max_large_ticks);
+                let slider_end_hits = self.slider_end_hits.min(max_slider_ends);
+
+                numerator += 30 * large_tick_hits + 10 * slider_end_hits;
+                denominator += 30 * max_large_ticks + 10 * max_slider_ends;
+            }
+        }
+
+        if denominator == 0 {
+            0.0
+        } else {
+            f64::from(numerator) / f64::from(denominator)
+>>>>>>> 42db299 (meow)
         }
     }
 }
@@ -114,6 +157,10 @@ pub enum OsuScoreOrigin {
     /// For scores set on osu!lazer without slider accuracy
     WithoutSliderAcc {
         max_large_ticks: u32,
+<<<<<<< HEAD
         max_small_ticks: u32,
+=======
+        max_slider_ends: u32,
+>>>>>>> 42db299 (meow)
     },
 }

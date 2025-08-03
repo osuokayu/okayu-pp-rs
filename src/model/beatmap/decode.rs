@@ -9,6 +9,10 @@ use rosu_map::{
             hit_samples::{HitSoundType, ParseHitSoundTypeError},
             HitObjectType, ParseHitObjectTypeError, PathControlPoint, PathType,
         },
+<<<<<<< HEAD
+=======
+        metadata::MetadataKey,
+>>>>>>> 42db299 (meow)
         timing_points::{ControlPoint, EffectFlags, ParseEffectFlagsError},
     },
     util::{KeyValue, ParseNumber, ParseNumberError, Pos, StrExt, MAX_PARSE_VALUE},
@@ -22,7 +26,11 @@ use crate::{
         },
         hit_object::{HitObject, HitObjectKind, HoldNote, Slider, Spinner},
     },
+<<<<<<< HEAD
     util::{float_ext::FloatExt, hint::unlikely, sort},
+=======
+    util::{float_ext::FloatExt, sort},
+>>>>>>> 42db299 (meow)
 };
 
 use super::{Beatmap, DEFAULT_SLIDER_LENIENCY};
@@ -40,7 +48,10 @@ pub struct BeatmapState {
     effect_points: Vec<EffectPoint>,
     hit_objects: Vec<HitObject>,
     hit_sounds: Vec<HitSoundType>,
+<<<<<<< HEAD
     metadata: Option<rosu_map::section::metadata::Metadata>,
+=======
+>>>>>>> 42db299 (meow)
 
     pending_control_points_time: f64,
     pending_timing_point: Option<TimingPoint>,
@@ -50,6 +61,12 @@ pub struct BeatmapState {
     curve_points: Vec<PathControlPoint>,
     vertices: Vec<PathControlPoint>,
     point_split: Vec<*const str>,
+<<<<<<< HEAD
+=======
+
+    creator: String,
+    beatmap_id: i32,
+>>>>>>> 42db299 (meow)
 }
 
 impl BeatmapState {
@@ -261,7 +278,10 @@ impl DecodeState for BeatmapState {
             effect_points: Vec::with_capacity(32),
             hit_objects: Vec::with_capacity(512),
             hit_sounds: Vec::with_capacity(512),
+<<<<<<< HEAD
             metadata: None,
+=======
+>>>>>>> 42db299 (meow)
             pending_control_points_time: 0.0,
             pending_timing_point: None,
             pending_difficulty_point: None,
@@ -272,6 +292,11 @@ impl DecodeState for BeatmapState {
             vertices: Vec::with_capacity(8),
             // mean=19.97 | median=8
             point_split: Vec::with_capacity(8),
+<<<<<<< HEAD
+=======
+            creator: String::default(),
+            beatmap_id: i32::default(),
+>>>>>>> 42db299 (meow)
         }
     }
 }
@@ -281,6 +306,7 @@ impl From<BeatmapState> for Beatmap {
         state.flush_pending_points();
 
         let Difficulty {
+<<<<<<< HEAD
             mut hp_drain_rate,
             mut circle_size,
             mut overall_difficulty,
@@ -304,6 +330,16 @@ impl From<BeatmapState> for Beatmap {
         slider_multiplier = slider_multiplier.clamp(0.4, 3.6);
         slider_tick_rate = slider_tick_rate.clamp(0.5, 8.0);
 
+=======
+            hp_drain_rate,
+            circle_size,
+            overall_difficulty,
+            approach_rate,
+            slider_multiplier,
+            slider_tick_rate,
+        } = state.difficulty;
+
+>>>>>>> 42db299 (meow)
         let mut sorter = sort::TandemSorter::new_stable(&state.hit_objects, |a, b| {
             a.start_time.total_cmp(&b.start_time)
         });
@@ -332,6 +368,11 @@ impl From<BeatmapState> for Beatmap {
             effect_points: state.effect_points,
             hit_objects: state.hit_objects,
             hit_sounds: state.hit_sounds,
+<<<<<<< HEAD
+=======
+            creator: state.creator,
+            beatmap_id: state.beatmap_id,
+>>>>>>> 42db299 (meow)
         }
     }
 }
@@ -464,7 +505,21 @@ impl DecodeBeatmap for Beatmap {
         Ok(())
     }
 
+<<<<<<< HEAD
     fn parse_metadata(_: &mut Self::State, _: &str) -> Result<(), Self::Error> {
+=======
+    fn parse_metadata(state: &mut Self::State, line: &str) -> Result<(), Self::Error> {
+        let Ok(KeyValue { key, value }) = KeyValue::parse(line.trim_comment()) else {
+            return Ok(());
+        };
+
+        match key {
+            MetadataKey::Creator => state.creator = value.to_string(),
+            MetadataKey::BeatmapID => state.beatmap_id = value.parse_num()?,
+            _ => {}
+        }
+
+>>>>>>> 42db299 (meow)
         Ok(())
     }
 
@@ -537,9 +592,15 @@ impl DecodeBeatmap for Beatmap {
             .parse::<f64>()
             .map_err(ParseNumberError::InvalidFloat)?;
 
+<<<<<<< HEAD
         if unlikely(beat_len < f64::from(-MAX_PARSE_VALUE)) {
             return Err(ParseNumberError::NumberUnderflow.into());
         } else if unlikely(beat_len > f64::from(MAX_PARSE_VALUE)) {
+=======
+        if beat_len < f64::from(-MAX_PARSE_VALUE) {
+            return Err(ParseNumberError::NumberUnderflow.into());
+        } else if beat_len > f64::from(MAX_PARSE_VALUE) {
+>>>>>>> 42db299 (meow)
             return Err(ParseNumberError::NumberOverflow.into());
         }
 
@@ -550,7 +611,11 @@ impl DecodeBeatmap for Beatmap {
         };
 
         if let Some(numerator) = split.next() {
+<<<<<<< HEAD
             if unlikely(i32::parse(numerator)? < 1) {
+=======
+            if i32::parse(numerator)? < 1 {
+>>>>>>> 42db299 (meow)
                 return Err(ParseBeatmapError::TimeSignature);
             }
         }
@@ -561,7 +626,11 @@ impl DecodeBeatmap for Beatmap {
 
         let timing_change = split
             .next()
+<<<<<<< HEAD
             .is_none_or(|next| matches!(next.chars().next(), Some('1')));
+=======
+            .map_or(true, |next| matches!(next.chars().next(), Some('1')));
+>>>>>>> 42db299 (meow)
 
         let kiai = split
             .next()
@@ -570,7 +639,11 @@ impl DecodeBeatmap for Beatmap {
             .is_some_and(|flags| flags.has_flag(EffectFlags::KIAI));
 
         if timing_change {
+<<<<<<< HEAD
             if unlikely(beat_len.is_nan()) {
+=======
+            if beat_len.is_nan() {
+>>>>>>> 42db299 (meow)
                 return Err(ParseBeatmapError::TimingControlPointNaN);
             }
 
@@ -581,12 +654,16 @@ impl DecodeBeatmap for Beatmap {
         let difficulty = DifficultyPoint::new(time, beat_len, speed_multiplier);
         state.add_pending_point(time, difficulty, timing_change);
 
+<<<<<<< HEAD
         let mut effect = EffectPoint::new(time, kiai);
 
         if matches!(state.mode, GameMode::Taiko | GameMode::Mania) {
             effect.scroll_speed = speed_multiplier.clamp(0.01, 10.0);
         }
 
+=======
+        let effect = EffectPoint::new(time, kiai);
+>>>>>>> 42db299 (meow)
         state.add_pending_point(time, effect, timing_change);
 
         state.pending_control_points_time = time;
@@ -658,7 +735,11 @@ impl DecodeBeatmap for Beatmap {
 
             let repeats = repeat_count.parse_num::<i32>()?;
 
+<<<<<<< HEAD
             if unlikely(repeats > 9000) {
+=======
+            if repeats > 9000 {
+>>>>>>> 42db299 (meow)
                 return Err(ParseBeatmapError::InvalidRepeatCount);
             }
 
@@ -826,6 +907,7 @@ impl ControlPoint<BeatmapState> for DifficultyPoint {
 
 impl ControlPoint<BeatmapState> for EffectPoint {
     fn check_already_existing(&self, state: &BeatmapState) -> bool {
+<<<<<<< HEAD
         self.check_already_existing(&state.effect_points)
     }
 
@@ -838,15 +920,28 @@ impl ControlPoint<BeatmapState> for EffectPoint {
 impl ControlPoint<Vec<EffectPoint>> for EffectPoint {
     fn check_already_existing(&self, effect_points: &Vec<EffectPoint>) -> bool {
         match effect_point_at(effect_points, self.time) {
+=======
+        match effect_point_at(&state.effect_points, self.time) {
+>>>>>>> 42db299 (meow)
             Some(existing) => self.is_redundant(existing),
             None => self.is_redundant(&EffectPoint::default()),
         }
     }
 
+<<<<<<< HEAD
     fn add(self, effect_points: &mut Vec<EffectPoint>) {
         match effect_points.binary_search_by(|probe| probe.time.total_cmp(&self.time)) {
             Err(i) => effect_points.insert(i, self),
             Ok(i) => effect_points[i] = self,
+=======
+    fn add(self, state: &mut BeatmapState) {
+        match state
+            .effect_points
+            .binary_search_by(|probe| probe.time.total_cmp(&self.time))
+        {
+            Err(i) => state.effect_points.insert(i, self),
+            Ok(i) => state.effect_points[i] = self,
+>>>>>>> 42db299 (meow)
         }
     }
 }

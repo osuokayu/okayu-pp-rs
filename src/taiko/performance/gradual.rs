@@ -21,8 +21,13 @@ use super::TaikoPerformanceAttributes;
 /// # Example
 ///
 /// ```
+<<<<<<< HEAD
 /// use okayu_pp::{Beatmap, Difficulty};
 /// use okayu_pp::taiko::{Taiko, TaikoGradualPerformance, TaikoScoreState};
+=======
+/// use akatsuki_pp::{Beatmap, Difficulty};
+/// use akatsuki_pp::taiko::{Taiko, TaikoGradualPerformance, TaikoScoreState};
+>>>>>>> 42db299 (meow)
 ///
 /// let map = Beatmap::from_path("./resources/1028484.osu").unwrap();
 ///
@@ -106,7 +111,11 @@ impl TaikoGradualPerformance {
     ///
     /// Note that the count is zero-indexed, so `n=0` will process 1 object,
     /// `n=1` will process 2, and so on.
+<<<<<<< HEAD
     #[allow(clippy::missing_panics_doc, reason = "technically false positive")]
+=======
+    #[allow(clippy::missing_panics_doc)]
+>>>>>>> 42db299 (meow)
     pub fn nth(&mut self, state: TaikoScoreState, n: usize) -> Option<TaikoPerformanceAttributes> {
         let performance = self
             .difficulty

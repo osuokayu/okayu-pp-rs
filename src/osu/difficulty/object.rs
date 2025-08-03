@@ -3,7 +3,11 @@ use std::{borrow::Cow, pin::Pin};
 use rosu_map::util::Pos;
 
 use crate::{
+<<<<<<< HEAD
     any::difficulty::object::{HasStartTime, IDifficultyObject},
+=======
+    any::difficulty::object::IDifficultyObject,
+>>>>>>> 42db299 (meow)
     osu::object::{OsuObject, OsuObjectKind, OsuSlider},
 };
 
@@ -25,12 +29,20 @@ pub struct OsuDifficultyObject<'a> {
 }
 
 impl<'a> OsuDifficultyObject<'a> {
+<<<<<<< HEAD
     pub const NORMALIZED_RADIUS: i32 = 50;
     pub const NORMALIZED_DIAMETER: i32 = Self::NORMALIZED_RADIUS * 2;
 
     pub const MIN_DELTA_TIME: f64 = 25.0;
     const MAX_SLIDER_RADIUS: f32 = Self::NORMALIZED_RADIUS as f32 * 2.4;
     const ASSUMED_SLIDER_RADIUS: f32 = Self::NORMALIZED_RADIUS as f32 * 1.8;
+=======
+    pub const NORMALIZED_RADIUS: f32 = 50.0;
+
+    pub const MIN_DELTA_TIME: f64 = 25.0;
+    const MAX_SLIDER_RADIUS: f32 = Self::NORMALIZED_RADIUS * 2.4;
+    const ASSUMED_SLIDER_RADIUS: f32 = Self::NORMALIZED_RADIUS * 1.8;
+>>>>>>> 42db299 (meow)
 
     pub fn new(
         hit_object: &'a OsuObject,
@@ -223,7 +235,11 @@ impl<'a> OsuDifficultyObject<'a> {
         h
     }
 
+<<<<<<< HEAD
     const fn get_end_cursor_pos(hit_object: &OsuObject) -> Pos {
+=======
+    fn get_end_cursor_pos(hit_object: &OsuObject) -> Pos {
+>>>>>>> 42db299 (meow)
         if let OsuObjectKind::Slider(ref slider) = hit_object.kind {
             // We don't have access to the slider's curve at this point so we
             // take the pre-computed value.
@@ -235,15 +251,21 @@ impl<'a> OsuDifficultyObject<'a> {
 }
 
 impl IDifficultyObject for OsuDifficultyObject<'_> {
+<<<<<<< HEAD
     type DifficultyObjects = [Self];
 
+=======
+>>>>>>> 42db299 (meow)
     fn idx(&self) -> usize {
         self.idx
     }
 }
+<<<<<<< HEAD
 
 impl HasStartTime for OsuDifficultyObject<'_> {
     fn start_time(&self) -> f64 {
         self.start_time
     }
 }
+=======
+>>>>>>> 42db299 (meow)

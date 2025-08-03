@@ -179,7 +179,11 @@ fn column_to_pos(column: u8, total_columns: i32) -> f32 {
 pub struct ContainedColumns(u16);
 
 impl ContainedColumns {
+<<<<<<< HEAD
     pub const fn insert(&mut self, column: u8) {
+=======
+    pub fn insert(&mut self, column: u8) {
+>>>>>>> 42db299 (meow)
         self.0 |= 1 << column;
     }
 

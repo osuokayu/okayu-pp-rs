@@ -3,9 +3,15 @@ use std::cmp;
 use rosu_map::section::general::GameMode;
 
 use crate::{
+<<<<<<< HEAD
     any::difficulty::skills::StrainSkill,
     mania::{convert, object::ObjectParams},
     model::{hit_object::HitObject, mode::ConvertError},
+=======
+    any::difficulty::skills::Skill,
+    mania::object::ObjectParams,
+    model::{beatmap::HitWindows, hit_object::HitObject, mode::ConvertError},
+>>>>>>> 42db299 (meow)
     Beatmap, Difficulty,
 };
 
@@ -26,8 +32,13 @@ use super::{
 /// # Example
 ///
 /// ```
+<<<<<<< HEAD
 /// use okayu_pp::{Beatmap, Difficulty};
 /// use okayu_pp::mania::ManiaGradualDifficulty;
+=======
+/// use akatsuki_pp::{Beatmap, Difficulty};
+/// use akatsuki_pp::mania::ManiaGradualDifficulty;
+>>>>>>> 42db299 (meow)
 ///
 /// let map = Beatmap::from_path("./resources/1638954.osu").unwrap();
 ///
@@ -53,6 +64,10 @@ pub struct ManiaGradualDifficulty {
     is_convert: bool,
     strain: Strain,
     diff_objects: Box<[ManiaDifficultyObject]>,
+<<<<<<< HEAD
+=======
+    hit_window: f64,
+>>>>>>> 42db299 (meow)
     note_state: NoteState,
 }
 
@@ -65,6 +80,7 @@ struct NoteState {
 impl ManiaGradualDifficulty {
     /// Create a new difficulty attributes iterator for osu!mania maps.
     pub fn new(difficulty: Difficulty, map: &Beatmap) -> Result<Self, ConvertError> {
+<<<<<<< HEAD
         let mut map = map.convert_ref(GameMode::Mania, difficulty.get_mods())?;
 
         if difficulty.get_mods().ho() {
@@ -78,12 +94,23 @@ impl ManiaGradualDifficulty {
         if let Some(seed) = difficulty.get_mods().random_seed() {
             convert::apply_random_to_beatmap(map.to_mut(), seed);
         }
+=======
+        let map = map.convert_ref(GameMode::Mania, difficulty.get_mods())?;
+>>>>>>> 42db299 (meow)
 
         let take = difficulty.get_passed_objects();
         let total_columns = map.cs.round_ties_even().max(1.0);
         let clock_rate = difficulty.get_clock_rate();
         let mut params = ObjectParams::new(&map);
 
+<<<<<<< HEAD
+=======
+        let HitWindows {
+            od_great: hit_window,
+            ..
+        } = map.attributes().difficulty(&difficulty).hit_windows();
+
+>>>>>>> 42db299 (meow)
         let mania_objects = map
             .hit_objects
             .iter()
@@ -117,6 +144,10 @@ impl ManiaGradualDifficulty {
             is_convert: map.is_convert,
             strain,
             diff_objects,
+<<<<<<< HEAD
+=======
+            hit_window,
+>>>>>>> 42db299 (meow)
             note_state,
         })
     }
@@ -132,7 +163,11 @@ impl Iterator for ManiaGradualDifficulty {
         // yet and just skip processing.
         if self.idx > 0 {
             let curr = self.diff_objects.get(self.idx - 1)?;
+<<<<<<< HEAD
             self.strain.process(curr, &self.diff_objects);
+=======
+            Skill::new(&mut self.strain, &self.diff_objects).process(curr);
+>>>>>>> 42db299 (meow)
 
             let is_circle = self.objects_is_circle[self.idx];
             increment_combo(
@@ -148,7 +183,12 @@ impl Iterator for ManiaGradualDifficulty {
         self.idx += 1;
 
         Some(ManiaDifficultyAttributes {
+<<<<<<< HEAD
             stars: self.strain.cloned_difficulty_value() * DIFFICULTY_MULTIPLIER,
+=======
+            stars: self.strain.as_difficulty_value() * DIFFICULTY_MULTIPLIER,
+            hit_window: self.hit_window,
+>>>>>>> 42db299 (meow)
             max_combo: self.note_state.curr_combo,
             n_objects: self.idx as u32,
             n_hold_notes: self.note_state.n_hold_notes,
@@ -177,11 +217,19 @@ impl Iterator for ManiaGradualDifficulty {
             self.idx += 1;
         }
 
+<<<<<<< HEAD
+=======
+        let mut strain = Skill::new(&mut self.strain, &self.diff_objects);
+>>>>>>> 42db299 (meow)
         let clock_rate = self.difficulty.get_clock_rate();
 
         for (curr, is_circle) in skip_iter.take(take) {
             increment_combo(*is_circle, curr, &mut self.note_state, clock_rate);
+<<<<<<< HEAD
             self.strain.process(curr, &self.diff_objects);
+=======
+            strain.process(curr);
+>>>>>>> 42db299 (meow)
             self.idx += 1;
         }
 

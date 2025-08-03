@@ -1,14 +1,21 @@
 use crate::{
+<<<<<<< HEAD
     any::difficulty::skills::StrainSkill,
+=======
+>>>>>>> 42db299 (meow)
     model::{beatmap::BeatmapAttributes, mods::GameMods},
     osu::object::OsuObject,
 };
 
 use self::{aim::Aim, flashlight::Flashlight, speed::Speed};
 
+<<<<<<< HEAD
 use super::{
     object::OsuDifficultyObject, scaling_factor::ScalingFactor, HD_FADE_IN_DURATION_MULTIPLIER,
 };
+=======
+use super::{scaling_factor::ScalingFactor, HD_FADE_IN_DURATION_MULTIPLIER};
+>>>>>>> 42db299 (meow)
 
 pub mod aim;
 pub mod flashlight;
@@ -47,7 +54,11 @@ impl OsuSkills {
 
         let aim = Aim::new(true);
         let aim_no_sliders = Aim::new(false);
+<<<<<<< HEAD
         let speed = Speed::new(hit_window, mods.ap());
+=======
+        let speed = Speed::new(hit_window, mods);
+>>>>>>> 42db299 (meow)
         let flashlight = Flashlight::new(mods, scaling_factor.radius, time_preempt, time_fade_in);
 
         Self {
@@ -57,6 +68,7 @@ impl OsuSkills {
             flashlight,
         }
     }
+<<<<<<< HEAD
 
     pub fn process(&mut self, curr: &OsuDifficultyObject<'_>, objects: &[OsuDifficultyObject<'_>]) {
         self.aim.process(curr, objects);
@@ -64,4 +76,6 @@ impl OsuSkills {
         self.speed.process(curr, objects);
         self.flashlight.process(curr, objects);
     }
+=======
+>>>>>>> 42db299 (meow)
 }

@@ -35,11 +35,14 @@ impl HitObject {
         matches!(&self.kind, HitObjectKind::Spinner(_))
     }
 
+<<<<<<< HEAD
     /// Whether the hitobject is a hold note.
     pub const fn is_hold_note(&self) -> bool {
         matches!(&self.kind, HitObjectKind::Hold(_))
     }
 
+=======
+>>>>>>> 42db299 (meow)
     /// The end time of the object.
     ///
     /// Note that this will not return the correct value for sliders.
