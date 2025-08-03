@@ -1,29 +1,11 @@
 [package]
-<<<<<<< HEAD
-<<<<<<< HEAD
 name = "okayu-pp"
-version = "1.1.5"
-edition = "2021"
-authors = ["MaxOhn <ohn.m@hotmail.de>", "tsunyoku <tsunyoku@gmail.com>", "Aochi <me@aochi.uk>"]
-license = "MIT"
-readme = "README.md"
-repository = "https://github.com/osuokayu/okayu-pp-rs"
-=======
-name = "akatsuki-pp"
-=======
-name = "okayu-pp"
->>>>>>> 0929f74 (change akatsuki to okayu)
 version = "1.1.2"
 edition = "2021"
 authors = ["MaxOhn <ohn.m@hotmail.de>", "tsunyoku <tsunyoku@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-<<<<<<< HEAD
-repository = "https://github.com/osuAkatsuki/akatsuki-pp-rs"
->>>>>>> 42db299 (meow)
-=======
 repository = "https://github.com/osuokayu/okayu-pp-rs"
->>>>>>> 0929f74 (change akatsuki to okayu)
 description = "Difficulty and performance calculation for osu!"
 keywords = ["osu", "pp", "stars", "performance", "difficulty"]
 
@@ -34,19 +16,11 @@ sync = []
 tracing = ["rosu-map/tracing"]
 
 [dependencies]
-<<<<<<< HEAD
 rosu-map = { version = "0.2.1" }
 rosu-mods = { version = "0.3.0" }
 
 [dev-dependencies]
 proptest = "1.6.0"
-=======
-rosu-map = { version = "0.2.0" }
-rosu-mods = { version = "0.2.0" }
-
-[dev-dependencies]
-proptest = "1.4.0"
->>>>>>> 42db299 (meow)
 
 [profile.test.package.proptest]
 opt-level = 3

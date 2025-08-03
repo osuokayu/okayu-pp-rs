@@ -1,11 +1,7 @@
 use rosu_map::section::general::GameMode;
 
 use crate::{
-<<<<<<< HEAD
     any::difficulty::{skills::StrainSkill, Difficulty},
-=======
-    any::difficulty::{skills::Skill, Difficulty},
->>>>>>> 42db299 (meow)
     catch::{
         catcher::Catcher, convert::convert_objects, difficulty::object::CatchDifficultyObject,
     },
@@ -37,11 +33,7 @@ pub fn difficulty(
         mut attrs,
     } = DifficultyValues::calculate(difficulty, &map);
 
-<<<<<<< HEAD
     DifficultyValues::eval(&mut attrs, movement.into_difficulty_value());
-=======
-    DifficultyValues::eval(&mut attrs, movement.difficulty_value());
->>>>>>> 42db299 (meow)
 
     Ok(attrs)
 }
@@ -87,7 +79,6 @@ impl DifficultyValues {
         let palpable_objects =
             convert_objects(map, &mut count, reflection, hr_offsets, map_attrs.cs as f32);
 
-<<<<<<< HEAD
         let mut half_catcher_width = Catcher::calculate_catch_width(map_attrs.cs as f32) * 0.5;
         half_catcher_width *= 1.0 - ((map_attrs.cs as f32 - 5.5).max(0.0) * 0.0625);
 
@@ -101,22 +92,6 @@ impl DifficultyValues {
 
         for curr in diff_objects.iter() {
             movement.process(curr, &diff_objects);
-=======
-        let diff_objects = Self::create_difficulty_objects(
-            &map_attrs,
-            clock_rate,
-            palpable_objects.iter().take(take),
-        );
-
-        let mut movement = Movement::new(clock_rate);
-
-        {
-            let mut movement = Skill::new(&mut movement, &diff_objects);
-
-            for curr in diff_objects.iter() {
-                movement.process(curr);
-            }
->>>>>>> 42db299 (meow)
         }
 
         attrs.set_object_count(&count.into_regular());
@@ -129,24 +104,14 @@ impl DifficultyValues {
     }
 
     pub fn create_difficulty_objects<'a>(
-<<<<<<< HEAD
         clock_rate: f64,
         half_catcher_width: f32,
-=======
-        map_attrs: &BeatmapAttributes,
-        clock_rate: f64,
->>>>>>> 42db299 (meow)
         mut palpable_objects: impl ExactSizeIterator<Item = &'a PalpableObject>,
     ) -> Box<[CatchDifficultyObject]> {
         let Some(mut last_object) = palpable_objects.next() else {
             return Box::default();
         };
 
-<<<<<<< HEAD
-=======
-        let mut half_catcher_width = Catcher::calculate_catch_width(map_attrs.cs as f32) * 0.5;
-        half_catcher_width *= 1.0 - ((map_attrs.cs as f32 - 5.5).max(0.0) * 0.0625);
->>>>>>> 42db299 (meow)
         let scaling_factor =
             CatchDifficultyObject::NORMALIZED_HITOBJECT_RADIUS / half_catcher_width;
 

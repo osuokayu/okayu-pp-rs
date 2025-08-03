@@ -1,20 +1,15 @@
 use std::cmp;
 
-<<<<<<< HEAD
 use rosu_map::{
     section::{
         general::GameMode, hit_objects::hit_samples::HitSoundType, timing_points::ControlPoint,
     },
     util::Pos,
 };
-=======
-use rosu_map::{section::general::GameMode, util::Pos};
->>>>>>> 42db299 (meow)
 
 use crate::{
     model::{
         beatmap::Beatmap,
-<<<<<<< HEAD
         control_point::{DifficultyPoint, EffectPoint, TimingPoint},
         hit_object::{HitObject, HitObjectKind, HoldNote, Slider, Spinner},
     },
@@ -22,12 +17,6 @@ use crate::{
         float_ext::FloatExt, get_precision_adjusted_beat_len,
         random::csharp::Random as CsharpRandom, sort::TandemSorter,
     },
-=======
-        control_point::{DifficultyPoint, TimingPoint},
-        hit_object::{HitObject, HitObjectKind, HoldNote, Slider, Spinner},
-    },
-    util::{float_ext::FloatExt, get_precision_adjusted_beat_len, sort::TandemSorter},
->>>>>>> 42db299 (meow)
 };
 
 const VELOCITY_MULTIPLIER: f32 = 1.4;
@@ -39,17 +28,13 @@ pub fn convert(map: &mut Beatmap) {
 
     let mut idx = 0;
 
-<<<<<<< HEAD
     let mut last_scroll_speed = 1.0;
 
-=======
->>>>>>> 42db299 (meow)
     while idx < map.hit_objects.len() {
         match map.hit_objects[idx].kind {
             HitObjectKind::Circle | HitObjectKind::Spinner(_) => {}
             HitObjectKind::Slider(ref slider) => {
                 let obj = &map.hit_objects[idx];
-<<<<<<< HEAD
 
                 let slider_velocity = map
                     .difficulty_point_at(obj.start_time)
@@ -73,9 +58,6 @@ pub fn convert(map: &mut Beatmap) {
                 }
 
                 let mut params = SliderParams::new(obj.start_time, slider, slider_velocity);
-=======
-                let mut params = SliderParams::new(obj.start_time, slider);
->>>>>>> 42db299 (meow)
 
                 if should_convert_slider_to_taiko_hits(map, &mut params) {
                     let mut i = 0;
@@ -147,10 +129,7 @@ fn should_convert_slider_to_taiko_hits(map: &Beatmap, params: &mut SliderParams<
         duration,
         start_time,
         tick_spacing,
-<<<<<<< HEAD
         slider_velocity,
-=======
->>>>>>> 42db299 (meow)
     } = params;
 
     // * The true distance, accounting for any repeats. This ends up being the drum roll distance later
@@ -165,17 +144,7 @@ fn should_convert_slider_to_taiko_hits(map: &Beatmap, params: &mut SliderParams<
         .timing_point_at(*start_time)
         .map_or(TimingPoint::DEFAULT_BEAT_LEN, |point| point.beat_len);
 
-<<<<<<< HEAD
     let mut beat_len = get_precision_adjusted_beat_len(*slider_velocity, timing_beat_len);
-=======
-    let slider_velocity = map
-        .difficulty_point_at(*start_time)
-        .map_or(DifficultyPoint::DEFAULT_SLIDER_VELOCITY, |point| {
-            point.slider_velocity
-        });
-
-    let mut beat_len = get_precision_adjusted_beat_len(slider_velocity, timing_beat_len);
->>>>>>> 42db299 (meow)
 
     let slider_scoring_point_dist = f64::from(OSU_BASE_SCORING_DIST)
         * (map.slider_multiplier * f64::from(VELOCITY_MULTIPLIER))
@@ -203,24 +172,16 @@ struct SliderParams<'c> {
     duration: u32,
     start_time: f64,
     tick_spacing: f64,
-<<<<<<< HEAD
     slider_velocity: f64,
 }
 
 impl<'c> SliderParams<'c> {
     const fn new(start_time: f64, slider: &'c Slider, slider_velocity: f64) -> Self {
-=======
-}
-
-impl<'c> SliderParams<'c> {
-    const fn new(start_time: f64, slider: &'c Slider) -> Self {
->>>>>>> 42db299 (meow)
         Self {
             slider,
             start_time,
             duration: 0,
             tick_spacing: 0.0,
-<<<<<<< HEAD
             slider_velocity,
         }
     }
@@ -240,8 +201,6 @@ pub(super) fn apply_random_to_beatmap(map: &mut Beatmap, seed: i32) {
         } else {
             // Rim
             *s = HitSoundType::from(u8::from(*s) | HitSoundType::CLAP);
-=======
->>>>>>> 42db299 (meow)
         }
     }
 }

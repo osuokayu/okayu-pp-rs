@@ -1,11 +1,7 @@
 use crate::{
     mania::object::ManiaObject,
     model::{beatmap::Beatmap, hit_object::HitObject},
-<<<<<<< HEAD
     util::random::osu::Random,
-=======
-    util::random::Random,
->>>>>>> 42db299 (meow)
 };
 
 pub(super) mod end_time_object;
@@ -20,11 +16,7 @@ pub struct PatternGenerator<'a> {
 }
 
 impl<'a> PatternGenerator<'a> {
-<<<<<<< HEAD
     const fn new(
-=======
-    fn new(
->>>>>>> 42db299 (meow)
         hit_object: &'a HitObject,
         total_columns: i32,
         random: &'a mut Random,

@@ -3,11 +3,7 @@ use std::cmp;
 use rosu_map::section::general::GameMode;
 
 use crate::{
-<<<<<<< HEAD
     any::difficulty::{skills::StrainSkill, Difficulty},
-=======
-    any::difficulty::{skills::Skill, Difficulty},
->>>>>>> 42db299 (meow)
     mania::{
         difficulty::{object::ManiaDifficultyObject, skills::strain::Strain},
         object::{ManiaObject, ObjectParams},
@@ -16,11 +12,7 @@ use crate::{
     Beatmap,
 };
 
-<<<<<<< HEAD
 use super::{attributes::ManiaDifficultyAttributes, convert};
-=======
-use super::attributes::ManiaDifficultyAttributes;
->>>>>>> 42db299 (meow)
 
 pub mod gradual;
 mod object;
@@ -32,7 +24,6 @@ pub fn difficulty(
     difficulty: &Difficulty,
     map: &Beatmap,
 ) -> Result<ManiaDifficultyAttributes, ConvertError> {
-<<<<<<< HEAD
     let mut map = map.convert_ref(GameMode::Mania, difficulty.get_mods())?;
 
     if difficulty.get_mods().ho() {
@@ -46,28 +37,13 @@ pub fn difficulty(
     if let Some(seed) = difficulty.get_mods().random_seed() {
         convert::apply_random_to_beatmap(map.to_mut(), seed);
     }
-=======
-    let map = map.convert_ref(GameMode::Mania, difficulty.get_mods())?;
->>>>>>> 42db299 (meow)
 
     let n_objects = cmp::min(difficulty.get_passed_objects(), map.hit_objects.len()) as u32;
 
     let values = DifficultyValues::calculate(difficulty, &map);
 
-<<<<<<< HEAD
     Ok(ManiaDifficultyAttributes {
         stars: values.strain.into_difficulty_value() * DIFFICULTY_MULTIPLIER,
-=======
-    let hit_window = map
-        .attributes()
-        .difficulty(difficulty)
-        .hit_windows()
-        .od_great;
-
-    Ok(ManiaDifficultyAttributes {
-        stars: values.strain.difficulty_value() * DIFFICULTY_MULTIPLIER,
-        hit_window,
->>>>>>> 42db299 (meow)
         max_combo: values.max_combo,
         n_objects,
         n_hold_notes: values.n_hold_notes,
@@ -98,17 +74,8 @@ impl DifficultyValues {
 
         let mut strain = Strain::new(total_columns as usize);
 
-<<<<<<< HEAD
         for curr in diff_objects.iter() {
             strain.process(curr, &diff_objects);
-=======
-        {
-            let mut strain = Skill::new(&mut strain, &diff_objects);
-
-            for curr in diff_objects.iter() {
-                strain.process(curr);
-            }
->>>>>>> 42db299 (meow)
         }
 
         Self {

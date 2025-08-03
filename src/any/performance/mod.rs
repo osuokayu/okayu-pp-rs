@@ -330,7 +330,6 @@ impl<'map> Performance<'map> {
     ///
     /// The meaning depends on the kind of score:
     /// - if set on osu!stable, this value is irrelevant and can be `0`
-<<<<<<< HEAD
     /// - if set on osu!lazer *with* slider accuracy, this value is the amount
     ///   of hit slider ticks and repeats
     /// - if set on osu!lazer *without* slider accuracy, this value is the
@@ -350,15 +349,6 @@ impl<'map> Performance<'map> {
     pub fn small_tick_hits(self, small_tick_hits: u32) -> Self {
         if let Self::Osu(osu) = self {
             Self::Osu(osu.small_tick_hits(small_tick_hits))
-=======
-    /// - if set on osu!lazer *without* `CL`, this value is the amount of hit
-    ///   slider ticks and repeats
-    /// - if set on osu!lazer *with* `CL`, this value is the amount of hit
-    ///   slider heads, ticks, and repeats
-    pub fn large_tick_hits(self, large_tick_hits: u32) -> Self {
-        if let Self::Osu(osu) = self {
-            Self::Osu(osu.n_large_ticks(large_tick_hits))
->>>>>>> 42db299 (meow)
         } else {
             self
         }
@@ -366,20 +356,10 @@ impl<'map> Performance<'map> {
 
     /// Specify the amount of hit slider ends.
     ///
-<<<<<<< HEAD
     /// Only relevant for osu!standard lazer scores with slider accuracy.
     pub fn slider_end_hits(self, slider_end_hits: u32) -> Self {
         if let Self::Osu(osu) = self {
             Self::Osu(osu.slider_end_hits(slider_end_hits))
-=======
-    /// Only relevant for osu!standard.
-    ///
-    /// osu! calls this value "slider tail hits" without the classic
-    /// mod and "small tick hits" with the classic mod.
-    pub fn n_slider_ends(self, n_slider_ends: u32) -> Self {
-        if let Self::Osu(osu) = self {
-            Self::Osu(osu.n_slider_ends(n_slider_ends))
->>>>>>> 42db299 (meow)
         } else {
             self
         }
@@ -454,20 +434,14 @@ impl<'map> Performance<'map> {
 
 /// While generating remaining hitresults, decide how they should be distributed.
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-<<<<<<< HEAD
 #[non_exhaustive]
-=======
->>>>>>> 42db299 (meow)
 pub enum HitResultPriority {
     /// Prioritize good hitresults over bad ones
     BestCase,
     /// Prioritize bad hitresults over good ones
     WorstCase,
-<<<<<<< HEAD
     /// Prioritize fast hitresults generation
     Fastest,
-=======
->>>>>>> 42db299 (meow)
 }
 
 impl HitResultPriority {

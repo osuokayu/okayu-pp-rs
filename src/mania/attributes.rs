@@ -5,11 +5,6 @@ use crate::mania::performance::ManiaPerformance;
 pub struct ManiaDifficultyAttributes {
     /// The final star rating.
     pub stars: f64,
-<<<<<<< HEAD
-=======
-    /// The perceived hit window for an n300 inclusive of rate-adjusting mods (DT/HT/etc).
-    pub hit_window: f64,
->>>>>>> 42db299 (meow)
     /// The amount of hitobjects in the map.
     pub n_objects: u32,
     /// The amount of hold notes in the map.

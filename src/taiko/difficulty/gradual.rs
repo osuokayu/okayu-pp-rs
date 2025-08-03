@@ -3,14 +3,9 @@ use std::{cmp, mem, slice::Iter};
 use rosu_map::section::general::GameMode;
 
 use crate::{
-<<<<<<< HEAD
     any::difficulty::skills::StrainSkill,
     model::{beatmap::HitWindows, hit_object::HitObject, mode::ConvertError},
     taiko::convert,
-=======
-    any::difficulty::skills::Skill,
-    model::{beatmap::HitWindows, hit_object::HitObject, mode::ConvertError},
->>>>>>> 42db299 (meow)
     util::sync::RefCount,
     Beatmap, Difficulty,
 };
@@ -33,18 +28,8 @@ use super::{
 /// # Example
 ///
 /// ```
-<<<<<<< HEAD
-<<<<<<< HEAD
-/// use okayu_pp::{Beatmap, Difficulty};
-/// use okayu_pp::taiko::{Taiko, TaikoGradualDifficulty};
-=======
 /// use akatsuki_pp::{Beatmap, Difficulty};
 /// use akatsuki_pp::taiko::{Taiko, TaikoGradualDifficulty};
->>>>>>> 42db299 (meow)
-=======
-/// use okayu_pp::{Beatmap, Difficulty};
-/// use okayu_pp::taiko::{Taiko, TaikoGradualDifficulty};
->>>>>>> 0929f74 (change akatsuki to okayu)
 ///
 /// let map = Beatmap::from_path("./resources/1028484.osu").unwrap();
 ///
@@ -85,15 +70,11 @@ enum FirstTwoCombos {
 impl TaikoGradualDifficulty {
     /// Create a new difficulty attributes iterator for osu!taiko maps.
     pub fn new(difficulty: Difficulty, map: &Beatmap) -> Result<Self, ConvertError> {
-<<<<<<< HEAD
         let mut map = map.convert_ref(GameMode::Taiko, difficulty.get_mods())?;
 
         if let Some(seed) = difficulty.get_mods().random_seed() {
             convert::apply_random_to_beatmap(map.to_mut(), seed);
         }
-=======
-        let map = map.convert_ref(GameMode::Taiko, difficulty.get_mods())?;
->>>>>>> 42db299 (meow)
 
         let take = difficulty.get_passed_objects();
         let clock_rate = difficulty.get_clock_rate();
@@ -111,10 +92,7 @@ impl TaikoGradualDifficulty {
         let HitWindows {
             od_great,
             od_ok,
-<<<<<<< HEAD
             od_meh: _,
-=======
->>>>>>> 42db299 (meow)
             ar: _,
         } = map.attributes().difficulty(&difficulty).hit_windows();
 
@@ -127,16 +105,10 @@ impl TaikoGradualDifficulty {
             clock_rate,
             &mut max_combo,
             &mut n_diff_objects,
-<<<<<<< HEAD
             difficulty.get_mods(),
         );
 
         let skills = TaikoSkills::new(od_great, map.is_convert);
-=======
-        );
-
-        let skills = TaikoSkills::new();
->>>>>>> 42db299 (meow)
 
         let attrs = TaikoDifficultyAttributes {
             great_hit_window: od_great,
@@ -182,7 +154,6 @@ impl Iterator for TaikoGradualDifficulty {
                 let curr = self.diff_objects_iter.next()?;
                 let borrowed = curr.get();
 
-<<<<<<< HEAD
                 self.skills.rhythm.process(&borrowed, &self.diff_objects);
                 self.skills.reading.process(&borrowed, &self.diff_objects);
                 self.skills.color.process(&borrowed, &self.diff_objects);
@@ -190,13 +161,6 @@ impl Iterator for TaikoGradualDifficulty {
                 self.skills
                     .single_color_stamina
                     .process(&borrowed, &self.diff_objects);
-=======
-                Skill::new(&mut self.skills.rhythm, &self.diff_objects).process(&borrowed);
-                Skill::new(&mut self.skills.color, &self.diff_objects).process(&borrowed);
-                Skill::new(&mut self.skills.stamina, &self.diff_objects).process(&borrowed);
-                Skill::new(&mut self.skills.single_color_stamina, &self.diff_objects)
-                    .process(&borrowed);
->>>>>>> 42db299 (meow)
 
                 if borrowed.base_hit_type.is_hit() {
                     self.attrs.max_combo += 1;
@@ -219,14 +183,9 @@ impl Iterator for TaikoGradualDifficulty {
         self.idx += 1;
 
         let mut attrs = self.attrs.clone();
-<<<<<<< HEAD
         let is_relax = self.difficulty.get_mods().rx();
 
         DifficultyValues::eval(&mut attrs, self.skills.clone(), is_relax);
-=======
-
-        DifficultyValues::eval(&mut attrs, self.skills.clone());
->>>>>>> 42db299 (meow)
 
         Some(attrs)
     }
@@ -278,20 +237,10 @@ impl Iterator for TaikoGradualDifficulty {
             }
         }
 
-<<<<<<< HEAD
-=======
-        let mut rhythm = Skill::new(&mut self.skills.rhythm, &self.diff_objects);
-        let mut color = Skill::new(&mut self.skills.color, &self.diff_objects);
-        let mut stamina = Skill::new(&mut self.skills.stamina, &self.diff_objects);
-        let mut single_color_stamina =
-            Skill::new(&mut self.skills.single_color_stamina, &self.diff_objects);
-
->>>>>>> 42db299 (meow)
         for _ in 0..take {
             loop {
                 let curr = self.diff_objects_iter.next()?;
                 let borrowed = curr.get();
-<<<<<<< HEAD
                 self.skills.rhythm.process(&borrowed, &self.diff_objects);
                 self.skills.reading.process(&borrowed, &self.diff_objects);
                 self.skills.color.process(&borrowed, &self.diff_objects);
@@ -299,12 +248,6 @@ impl Iterator for TaikoGradualDifficulty {
                 self.skills
                     .single_color_stamina
                     .process(&borrowed, &self.diff_objects);
-=======
-                rhythm.process(&borrowed);
-                color.process(&borrowed);
-                stamina.process(&borrowed);
-                single_color_stamina.process(&borrowed);
->>>>>>> 42db299 (meow)
 
                 if borrowed.base_hit_type.is_hit() {
                     self.attrs.max_combo += 1;

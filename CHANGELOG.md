@@ -228,11 +228,7 @@ Big changes including the most recent [osu!](https://osu.ppy.sh/home/news/2022-0
     - `timing_point_at`: Return the timing point for the given timestamp
     - `difficulty_point_at`: Return the difficulty point for the given timestamp if available
 - __Breaking changes:__
-<<<<<<< HEAD
   - Moved some types to a different module. The following types can now be found in `okayu_pp::beatmap`:
-=======
-  - Moved some types to a different module. The following types can now be found in `rosu_pp::beatmap`:
->>>>>>> 42db299 (meow)
     - `Beatmap`
     - `BeatmapAttributes`
     - `ControlPoint`
@@ -270,11 +266,7 @@ Big changes including the most recent [osu!](https://osu.ppy.sh/home/news/2022-0
   - `BeatmapExt::stars`'s definition was adjusted to use the `AnyStars` builder struct
   - Store `HitObject::sound` in `Beatmap::sounds` instead to reduce the struct size
   - Removed the mode features `osu`, `fruits`, `taiko`, and `mania`. Now all modes are always supported.
-<<<<<<< HEAD
   - Renamed the `okayu_pp::fruits` module to `okayu_pp::catch`. Similarly, all structs `Fruits{Name}` were renamed to `Catch{Name}` and enums over the mode have their `Fruits` variant renamed to `Catch`
-=======
-  - Renamed the `rosu_pp::fruits` module to `rosu_pp::catch`. Similarly, all structs `Fruits{Name}` were renamed to `Catch{Name}` and enums over the mode have their `Fruits` variant renamed to `Catch`
->>>>>>> 42db299 (meow)
   - Renamed `Mods`' method `speed` to `clock_rate`
 - __Additions:__
   - Added `AttributeProvider` impl for `{Mode}PerformanceAttributes`
@@ -302,11 +294,7 @@ Big changes including the most recent [osu!](https://osu.ppy.sh/home/news/2022-0
 ## v0.3.0 (2021-11-14)
 
 - [BREAKING] With the importance of sliders for osu!standard, the `no_sliders_no_leniency` feature became too inaccurate. Additionally, since considering sliders now inherently drags performance down a little more, the difference between `no_leniency` and `all_included` became too small. Hence, the three osu features `no_sliders_no_leniency`, `no_leniency`, and `all_included` were removed. When the `osu` feature is enabled, it will now essentially use `all_included` under the hood.
-<<<<<<< HEAD
   Additionally, instead of importing through `okayu_pp::osu::{version}`, you now have to import through `okayu_pp::osu`.
-=======
-  Additionally, instead of importing through `rosu_pp::osu::{version}`, you now have to import through `rosu_pp::osu`.
->>>>>>> 42db299 (meow)
 - [BREAKING] Instead of returning `PpResult`, performance calculations now return `{Mode}PerformanceAttributes` and `PpResult` has been renamed to `PerformanceAttributes`.
 - [BREAKING] Instead of returning `StarResult`, difficulty calculations now return `{Mode}DifficultyAttributes` and `StarResult` has been renamed to `DifficultyAttributes`.
 - [BREAKING] Various fields and methods now include `f64` instead of `f32` to stay true to osu!'s original code
@@ -344,11 +332,7 @@ Big changes including the most recent [osu!](https://osu.ppy.sh/home/news/2022-0
 ## v0.2.0 (2021-02-25)
 
 - Async beatmap parsing through features `async_tokio` or `async_std` ([#1] - [@Pure-Peace])
-<<<<<<< HEAD
 - [BREAKING] Hide various parsing related types further inwards, i.e. `okayu_pp::parse::some_type` instead of `okayu_pp::some_type`
-=======
-- [BREAKING] Hide various parsing related types further inwards, i.e. `rosu_pp::parse::some_type` instead of `rosu_pp::some_type`
->>>>>>> 42db299 (meow)
   - Affected types: `DifficultyPoint`, `HitObject`, `Pos2`, `TimingPoint`, `HitObjectKind`, `PathType`, `HitSound`
 
 ## v0.1.1 (2021-02-15)

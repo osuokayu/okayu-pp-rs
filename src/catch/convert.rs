@@ -6,11 +6,7 @@ use crate::{
         hit_object::{HitObject, HitObjectKind, HoldNote, Spinner},
         mods::Reflection,
     },
-<<<<<<< HEAD
     util::{float_ext::FloatExt, random::osu::Random},
-=======
-    util::{float_ext::FloatExt, random::Random},
->>>>>>> 42db299 (meow)
 };
 
 use super::{
@@ -27,11 +23,7 @@ use super::{
 
 const RNG_SEED: i32 = 1337;
 
-<<<<<<< HEAD
 pub const fn convert(map: &mut Beatmap) {
-=======
-pub fn convert(map: &mut Beatmap) {
->>>>>>> 42db299 (meow)
     map.mode = GameMode::Catch;
     map.is_convert = true;
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 use std::cmp::Ordering;
 
 use rosu_map::{section::general::GameMode, util::Pos};
@@ -15,16 +14,6 @@ use crate::{
         random::{csharp::Random as CsharpRandom, osu::Random as OsuRandom},
         sort,
     },
-=======
-use rosu_map::{section::general::GameMode, util::Pos};
-
-use crate::{
-    model::{
-        beatmap::Beatmap,
-        hit_object::{HitObjectKind, HoldNote, Spinner},
-    },
-    util::{limited_queue::LimitedQueue, random::Random, sort},
->>>>>>> 42db299 (meow)
     GameMods,
 };
 
@@ -48,11 +37,7 @@ pub fn convert(map: &mut Beatmap, mods: &GameMods) {
         + (map.od * 41.2) as i32
         + map.ar.round_ties_even() as i32;
 
-<<<<<<< HEAD
     let mut random = OsuRandom::new(seed);
-=======
-    let mut random = Random::new(seed);
->>>>>>> 42db299 (meow)
 
     map.cs = target_columns(map, mods);
 
@@ -157,12 +142,7 @@ pub fn convert(map: &mut Beatmap, mods: &GameMods) {
 
     map.hit_sounds.clear();
     map.hit_objects = new_hit_objects;
-<<<<<<< HEAD
     map.hit_objects.sort_by(cmp_by_start_time);
-=======
-    map.hit_objects
-        .sort_by(|a, b| a.start_time.total_cmp(&b.start_time));
->>>>>>> 42db299 (meow)
     sort::osu_legacy(&mut map.hit_objects);
 
     map.mode = GameMode::Mania;
@@ -217,18 +197,12 @@ fn target_columns(map: &Beatmap, mods: &GameMods) -> f32 {
         }
     }
 
-<<<<<<< HEAD
     #[allow(clippy::manual_clamp, reason = "keeping it in-sync with lazer")]
-=======
-    // Keeping it in-sync with lazer
-    #[allow(clippy::manual_clamp)]
->>>>>>> 42db299 (meow)
     {
         ((rounded_od as i32) + 1).min(7).max(4) as f32
     }
 }
 
-<<<<<<< HEAD
 pub(super) fn apply_hold_off_to_beatmap(map: &mut Beatmap) {
     let new_hit_objects_iter = map.hit_objects.iter().filter_map(|h| {
         if h.is_hold_note() {
@@ -348,8 +322,6 @@ fn cmp_by_start_time(a: &HitObject, b: &HitObject) -> Ordering {
     a.start_time.total_cmp(&b.start_time)
 }
 
-=======
->>>>>>> 42db299 (meow)
 #[cfg(test)]
 mod tests {
     use crate::util::float_ext::FloatExt;

@@ -12,11 +12,7 @@ use crate::{
         control_point::{DifficultyPoint, EffectPoint, TimingPoint},
         hit_object::HitObject,
     },
-<<<<<<< HEAD
     util::{get_precision_adjusted_beat_len, random::osu::Random},
-=======
-    util::{get_precision_adjusted_beat_len, random::Random},
->>>>>>> 42db299 (meow)
 };
 
 use super::PatternGenerator;

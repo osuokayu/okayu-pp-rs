@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 use std::{cmp, f64::consts::PI};
 
 use crate::{
@@ -63,81 +62,11 @@ impl Speed {
 
     pub fn relevant_note_count(&self) -> f64 {
         self.strain_skill_object_strains
-=======
-use std::{
-    cmp,
-    f64::consts::{E, PI},
-};
-
-use crate::{
-    any::difficulty::{
-        object::IDifficultyObject,
-        skills::{strain_decay, ISkill, Skill},
-    },
-    osu::difficulty::object::OsuDifficultyObject,
-    util::strains_vec::StrainsVec,
-    GameMods,
-};
-
-use super::strain::{DifficultyValue, OsuStrainSkill, UsedOsuStrainSkills};
-
-const SKILL_MULTIPLIER: f64 = 1.430;
-const STRAIN_DECAY_BASE: f64 = 0.3;
-
-const REDUCED_SECTION_COUNT: usize = 5;
-
-#[derive(Clone)]
-pub struct Speed {
-    curr_strain: f64,
-    curr_rhythm: f64,
-    hit_window: f64,
-    has_autopilot_mod: bool,
-    inner: OsuStrainSkill,
-}
-
-impl Speed {
-    pub fn new(hit_window: f64, mods: &GameMods) -> Self {
-        Self {
-            curr_strain: 0.0,
-            curr_rhythm: 0.0,
-            hit_window,
-            has_autopilot_mod: mods.ap(),
-            inner: OsuStrainSkill::default(),
-        }
-    }
-
-    pub fn get_curr_strain_peaks(self) -> StrainsVec {
-        self.inner.get_curr_strain_peaks().strains()
-    }
-
-    pub fn difficulty_value(self) -> UsedOsuStrainSkills<DifficultyValue> {
-        Self::static_difficulty_value(self.inner)
-    }
-
-    /// Use [`difficulty_value`] instead whenever possible because
-    /// [`as_difficulty_value`] clones internally.
-    pub fn as_difficulty_value(&self) -> UsedOsuStrainSkills<DifficultyValue> {
-        Self::static_difficulty_value(self.inner.clone())
-    }
-
-    fn static_difficulty_value(skill: OsuStrainSkill) -> UsedOsuStrainSkills<DifficultyValue> {
-        skill.difficulty_value(
-            REDUCED_SECTION_COUNT,
-            OsuStrainSkill::REDUCED_STRAIN_BASELINE,
-            OsuStrainSkill::DECAY_WEIGHT,
-        )
-    }
-
-    pub fn relevant_note_count(&self) -> f64 {
-        self.inner
-            .object_strains
->>>>>>> 42db299 (meow)
             .iter()
             .copied()
             .max_by(f64::total_cmp)
             .filter(|&n| n > 0.0)
             .map_or(0.0, |max_strain| {
-<<<<<<< HEAD
                 self.strain_skill_object_strains
                     .iter()
                     .fold(0.0, |sum, strain| {
@@ -159,104 +88,20 @@ impl Speed {
 }
 
 impl OsuStrainSkill for Speed {}
-=======
-                self.inner.object_strains.iter().fold(0.0, |sum, strain| {
-                    sum + (1.0 + (-(strain / max_strain * 12.0 - 6.0)).exp()).recip()
-                })
-            })
-    }
-}
-
-impl ISkill for Speed {
-    type DifficultyObjects<'a> = [OsuDifficultyObject<'a>];
-}
-
-impl<'a> Skill<'a, Speed> {
-    fn calculate_initial_strain(&mut self, time: f64, curr: &'a OsuDifficultyObject<'a>) -> f64 {
-        let prev_start_time = curr
-            .previous(0, self.diff_objects)
-            .map_or(0.0, |prev| prev.start_time);
-
-        (self.inner.curr_strain * self.inner.curr_rhythm)
-            * strain_decay(time - prev_start_time, STRAIN_DECAY_BASE)
-    }
-
-    fn curr_section_peak(&self) -> f64 {
-        self.inner.inner.inner.curr_section_peak
-    }
-
-    fn curr_section_peak_mut(&mut self) -> &mut f64 {
-        &mut self.inner.inner.inner.curr_section_peak
-    }
-
-    fn curr_section_end(&self) -> f64 {
-        self.inner.inner.inner.curr_section_end
-    }
-
-    fn curr_section_end_mut(&mut self) -> &mut f64 {
-        &mut self.inner.inner.inner.curr_section_end
-    }
-
-    pub fn process(&mut self, curr: &'a OsuDifficultyObject<'a>) {
-        if curr.idx == 0 {
-            *self.curr_section_end_mut() = (curr.start_time / OsuStrainSkill::SECTION_LEN).ceil()
-                * OsuStrainSkill::SECTION_LEN;
-        }
-
-        while curr.start_time > self.curr_section_end() {
-            self.inner.inner.save_curr_peak();
-            let initial_strain = self.calculate_initial_strain(self.curr_section_end(), curr);
-            self.inner.inner.start_new_section_from(initial_strain);
-            *self.curr_section_end_mut() += OsuStrainSkill::SECTION_LEN;
-        }
-
-        let strain_value_at = self.strain_value_at(curr);
-        *self.curr_section_peak_mut() = strain_value_at.max(self.curr_section_peak());
-    }
-
-    fn strain_value_at(&mut self, curr: &'a OsuDifficultyObject<'a>) -> f64 {
-        self.inner.curr_strain *= strain_decay(curr.strain_time, STRAIN_DECAY_BASE);
-        self.inner.curr_strain += SpeedEvaluator::evaluate_diff_of(
-            curr,
-            self.diff_objects,
-            self.inner.hit_window,
-            self.inner.has_autopilot_mod,
-        ) * SKILL_MULTIPLIER;
-        self.inner.curr_rhythm =
-            RhythmEvaluator::evaluate_diff_of(curr, self.diff_objects, self.inner.hit_window);
-
-        let total_strain = self.inner.curr_strain * self.inner.curr_rhythm;
-        self.inner.inner.object_strains.push(total_strain);
-
-        total_strain
-    }
-}
->>>>>>> 42db299 (meow)
 
 struct SpeedEvaluator;
 
 impl SpeedEvaluator {
-<<<<<<< HEAD
     const SINGLE_SPACING_THRESHOLD: f64 = OsuDifficultyObject::NORMALIZED_DIAMETER as f64 * 1.25; // 1.25 circlers distance between centers
     const MIN_SPEED_BONUS: f64 = 200.0; // 200 BPM 1/4th
     const SPEED_BALANCING_FACTOR: f64 = 40.0;
     const DIST_MULTIPLIER: f64 = 0.9;
-=======
-    const SINGLE_SPACING_THRESHOLD: f64 = 125.0; // 1.25 circlers distance between centers
-    const MIN_SPEED_BONUS: f64 = 75.0; // ~200BPM
-    const SPEED_BALANCING_FACTOR: f64 = 40.0;
-    const DIST_MULTIPLIER: f64 = 0.94;
->>>>>>> 42db299 (meow)
 
     fn evaluate_diff_of<'a>(
         curr: &'a OsuDifficultyObject<'a>,
         diff_objects: &'a [OsuDifficultyObject<'a>],
         hit_window: f64,
-<<<<<<< HEAD
         autopilot: bool,
-=======
-        has_autopilot_mod: bool,
->>>>>>> 42db299 (meow)
     ) -> f64 {
         if curr.base.is_spinner() {
             return 0.0;
@@ -277,16 +122,10 @@ impl SpeedEvaluator {
         // * 0.93 is derived from making sure 260bpm OD8 streams aren't nerfed harshly, whilst 0.92 limits the effect of the cap.
         strain_time /= ((strain_time / hit_window) / 0.93).clamp(0.92, 1.0);
 
-<<<<<<< HEAD
         let speed_bonus = if milliseconds_to_bpm(strain_time, None) > Self::MIN_SPEED_BONUS {
             // * Add additional scaling bonus for streams/bursts higher than 200bpm
             let base = (bpm_to_milliseconds(Self::MIN_SPEED_BONUS, None) - strain_time)
                 / Self::SPEED_BALANCING_FACTOR;
-=======
-        let speed_bonus = if strain_time < Self::MIN_SPEED_BONUS {
-            // * Add additional scaling bonus for streams/bursts higher than 200bpm
-            let base = (Self::MIN_SPEED_BONUS - strain_time) / Self::SPEED_BALANCING_FACTOR;
->>>>>>> 42db299 (meow)
 
             0.75 * base.powf(2.0)
         } else {
@@ -295,30 +134,18 @@ impl SpeedEvaluator {
         };
 
         let travel_dist = osu_prev_obj.map_or(0.0, |obj| obj.travel_dist);
-<<<<<<< HEAD
         let mut dist = travel_dist + osu_curr_obj.min_jump_dist;
-=======
-        let mut dist = if has_autopilot_mod {
-            0.0
-        } else {
-            travel_dist + osu_curr_obj.min_jump_dist
-        };
->>>>>>> 42db299 (meow)
 
         // * Cap distance at single_spacing_threshold
         dist = Self::SINGLE_SPACING_THRESHOLD.min(dist);
 
         // * Max distance bonus is 1 * `distance_multiplier` at single_spacing_threshold
-<<<<<<< HEAD
         let mut dist_bonus =
             (dist / Self::SINGLE_SPACING_THRESHOLD).powf(3.95) * Self::DIST_MULTIPLIER;
 
         if autopilot {
             dist_bonus = 0.0;
         }
-=======
-        let dist_bonus = (dist / Self::SINGLE_SPACING_THRESHOLD).powf(3.95) * Self::DIST_MULTIPLIER;
->>>>>>> 42db299 (meow)
 
         // * Base difficulty with all bonuses
         let difficulty = (1.0 + speed_bonus + dist_bonus) * 1000.0 / strain_time;
@@ -466,11 +293,7 @@ impl RhythmEvaluator {
                             }
 
                             // * repeated island (ex: triplet -> triplet)
-<<<<<<< HEAD
                             let power = logistic(f64::from(island.delta), 58.33, 0.24, Some(2.75));
-=======
-                            let power = logistic(f64::from(island.delta), 2.75, 0.24, 14.0);
->>>>>>> 42db299 (meow)
                             effective_ratio *= (3.0 / island_count.count as f64)
                                 .min((island_count.count as f64).recip().powf(power));
                         } else {
@@ -528,13 +351,6 @@ impl RhythmEvaluator {
     }
 }
 
-<<<<<<< HEAD
-=======
-fn logistic(x: f64, max_value: f64, multiplier: f64, offset: f64) -> f64 {
-    max_value / (1.0 + E.powf(offset - (multiplier * x)))
-}
-
->>>>>>> 42db299 (meow)
 #[derive(Copy, Clone)]
 struct RhythmIsland {
     delta_difference_eps: f64,

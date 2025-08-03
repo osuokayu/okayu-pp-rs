@@ -137,15 +137,7 @@ impl<T: fmt::Debug> fmt::Debug for Weak<T> {
 }
 
 /// ```compile_fail
-<<<<<<< HEAD
-<<<<<<< HEAD
-/// use okayu_pp::{taiko::TaikoGradualDifficulty, Beatmap, Difficulty};
-=======
 /// use akatsuki_pp::{taiko::TaikoGradualDifficulty, Beatmap, Difficulty};
->>>>>>> 42db299 (meow)
-=======
-/// use okayu_pp::{taiko::TaikoGradualDifficulty, Beatmap, Difficulty};
->>>>>>> 0929f74 (change akatsuki to okayu)
 ///
 /// let map = Beatmap::from_bytes(&[]).unwrap();
 /// let difficulty = Difficulty::new();

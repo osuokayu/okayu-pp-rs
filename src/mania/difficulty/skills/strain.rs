@@ -1,5 +1,4 @@
 use crate::{
-<<<<<<< HEAD
     any::difficulty::object::{HasStartTime, IDifficultyObject},
     mania::difficulty::object::ManiaDifficultyObject,
     util::difficulty::logistic,
@@ -15,36 +14,6 @@ define_skill! {
         overall_strain: f64 = 1.0,
     }
 
-=======
-    any::difficulty::{
-        object::IDifficultyObject,
-        skills::{strain_decay, ISkill, Skill, StrainDecaySkill},
-    },
-    mania::difficulty::object::ManiaDifficultyObject,
-    util::strains_vec::StrainsVec,
-};
-
-const INDIVIDUAL_DECAY_BASE: f64 = 0.125;
-const OVERALL_DECAY_BASE: f64 = 0.3;
-const RELEASE_THRESHOLD: f64 = 30.0;
-
-const SKILL_MULTIPLIER: f64 = 1.0;
-const STRAIN_DECAY_BASE: f64 = 1.0;
-
-#[allow(clippy::struct_field_names)]
-pub struct Strain {
-    start_times: Box<[f64]>,
-    end_times: Box<[f64]>,
-    individual_strains: Box<[f64]>,
-
-    individual_strain: f64,
-    overall_strain: f64,
-
-    inner: StrainDecaySkill,
-}
-
-impl Strain {
->>>>>>> 42db299 (meow)
     pub fn new(total_columns: usize) -> Self {
         Self {
             start_times: vec![0.0; total_columns].into_boxed_slice(),
@@ -52,7 +21,6 @@ impl Strain {
             individual_strains: vec![0.0; total_columns].into_boxed_slice(),
             individual_strain: 0.0,
             overall_strain: 1.0,
-<<<<<<< HEAD
         }
     }
 }
@@ -91,46 +59,6 @@ impl Strain {
         curr: &ManiaDifficultyObject,
         _: &[ManiaDifficultyObject],
     ) -> f64 {
-=======
-            inner: StrainDecaySkill::default(),
-        }
-    }
-
-    pub fn get_curr_strain_peaks(self) -> StrainsVec {
-        self.inner.get_curr_strain_peaks()
-    }
-
-    pub fn difficulty_value(self) -> f64 {
-        Self::static_difficulty_value(self.inner)
-    }
-
-    /// Use [`difficulty_value`] instead whenever possible because
-    /// [`as_difficulty_value`] clones internally.
-    pub fn as_difficulty_value(&self) -> f64 {
-        Self::static_difficulty_value(self.inner.clone())
-    }
-
-    fn static_difficulty_value(skill: StrainDecaySkill) -> f64 {
-        skill.difficulty_value(StrainDecaySkill::DECAY_WEIGHT)
-    }
-
-    const fn curr_strain(&self) -> f64 {
-        self.inner.curr_strain
-    }
-
-    fn curr_strain_mut(&mut self) -> &mut f64 {
-        &mut self.inner.curr_strain
-    }
-
-    fn strain_value_at(&mut self, curr: &ManiaDifficultyObject) -> f64 {
-        *self.curr_strain_mut() *= strain_decay(curr.delta_time, STRAIN_DECAY_BASE);
-        *self.curr_strain_mut() += self.strain_value_of(curr) * SKILL_MULTIPLIER;
-
-        self.curr_strain()
-    }
-
-    fn strain_value_of(&mut self, curr: &ManiaDifficultyObject) -> f64 {
->>>>>>> 42db299 (meow)
         let mania_curr = curr;
         let start_time = mania_curr.start_time;
         let end_time = mania_curr.end_time;
@@ -169,22 +97,14 @@ impl Strain {
         // * 0.0 +--------+-+---------------> Release Difference / ms
         // *         release_threshold
         if is_overlapping {
-<<<<<<< HEAD
             hold_addition = logistic(closest_end_time, Self::RELEASE_THRESHOLD, 0.27, None);
-=======
-            hold_addition = (1.0 + (0.27 * (RELEASE_THRESHOLD - closest_end_time)).exp()).recip();
->>>>>>> 42db299 (meow)
         }
 
         // * Decay and increase individualStrains in own column
         self.individual_strains[column] = apply_decay(
             self.individual_strains[column],
             start_time - self.start_times[column],
-<<<<<<< HEAD
             Self::INDIVIDUAL_DECAY_BASE,
-=======
-            INDIVIDUAL_DECAY_BASE,
->>>>>>> 42db299 (meow)
         );
         self.individual_strains[column] += 2.0 * hold_factor;
 
@@ -196,15 +116,11 @@ impl Strain {
         };
 
         // * Decay and increase overallStrain
-<<<<<<< HEAD
         self.overall_strain = apply_decay(
             self.overall_strain,
             curr.delta_time,
             Self::OVERALL_DECAY_BASE,
         );
-=======
-        self.overall_strain = apply_decay(self.overall_strain, curr.delta_time, OVERALL_DECAY_BASE);
->>>>>>> 42db299 (meow)
         self.overall_strain += (1.0 + hold_addition) * hold_factor;
 
         // * Update startTimes and endTimes arrays
@@ -212,70 +128,10 @@ impl Strain {
         self.end_times[column] = end_time;
 
         // * By subtracting CurrentStrain, this skill effectively only considers the maximum strain of any one hitobject within each strain section.
-<<<<<<< HEAD
         self.individual_strain + self.overall_strain - self.strain_decay_skill_current_strain
-=======
-        self.individual_strain + self.overall_strain - self.curr_strain()
-    }
-}
-
-impl ISkill for Strain {
-    type DifficultyObjects<'a> = [ManiaDifficultyObject];
-}
-
-impl Skill<'_, Strain> {
-    fn calculate_initial_strain(&mut self, offset: f64, curr: &ManiaDifficultyObject) -> f64 {
-        let prev_start_time = curr
-            .previous(0, self.diff_objects)
-            .map_or(0.0, |prev| prev.start_time);
-
-        let time = offset - prev_start_time;
-
-        let individual = apply_decay(self.inner.individual_strain, time, INDIVIDUAL_DECAY_BASE);
-        let overall = apply_decay(self.inner.overall_strain, time, OVERALL_DECAY_BASE);
-
-        individual + overall
-    }
-
-    const fn curr_section_peak(&self) -> f64 {
-        self.inner.inner.inner.curr_section_peak
-    }
-
-    fn curr_section_peak_mut(&mut self) -> &mut f64 {
-        &mut self.inner.inner.inner.curr_section_peak
-    }
-
-    const fn curr_section_end(&self) -> f64 {
-        self.inner.inner.inner.curr_section_end
-    }
-
-    fn curr_section_end_mut(&mut self) -> &mut f64 {
-        &mut self.inner.inner.inner.curr_section_end
-    }
-
-    pub fn process(&mut self, curr: &ManiaDifficultyObject) {
-        if curr.idx == 0 {
-            *self.curr_section_end_mut() = (curr.start_time / StrainDecaySkill::SECTION_LEN).ceil()
-                * StrainDecaySkill::SECTION_LEN;
-        }
-
-        while curr.start_time > self.curr_section_end() {
-            self.inner.inner.save_curr_peak();
-            let initial_strain = self.calculate_initial_strain(self.curr_section_end(), curr);
-            self.inner.inner.start_new_section_from(initial_strain);
-            *self.curr_section_end_mut() += StrainDecaySkill::SECTION_LEN;
-        }
-
-        let strain_value_at = self.inner.strain_value_at(curr);
-        *self.curr_section_peak_mut() = strain_value_at.max(self.curr_section_peak());
->>>>>>> 42db299 (meow)
     }
 }
 
 fn apply_decay(value: f64, delta_time: f64, decay_base: f64) -> f64 {
-<<<<<<< HEAD
     value * f64::powf(decay_base, delta_time / 1000.0)
-=======
-    value * decay_base.powf(delta_time / 1000.0)
->>>>>>> 42db299 (meow)
 }

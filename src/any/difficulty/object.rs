@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 pub trait IDifficultyObject {
     type DifficultyObjects: IDifficultyObjects + ?Sized;
 
@@ -9,12 +8,6 @@ pub trait IDifficultyObject {
         backwards_idx: usize,
         diff_objects: &'a Self::DifficultyObjects,
     ) -> Option<&'a <Self::DifficultyObjects as IDifficultyObjects>::DifficultyObject> {
-=======
-pub trait IDifficultyObject: Sized {
-    fn idx(&self) -> usize;
-
-    fn previous<'a, D>(&self, backwards_idx: usize, diff_objects: &'a [D]) -> Option<&'a D> {
->>>>>>> 42db299 (meow)
         self.idx()
             .checked_sub(backwards_idx + 1)
             .and_then(|idx| diff_objects.get(idx))
@@ -24,7 +17,6 @@ pub trait IDifficultyObject: Sized {
         diff_objects.get(self.idx() + (forwards_idx + 1))
     }
 }
-<<<<<<< HEAD
 
 pub trait IDifficultyObjects {
     type DifficultyObject: HasStartTime;
@@ -43,5 +35,3 @@ impl<T: HasStartTime> IDifficultyObjects for [T] {
 pub trait HasStartTime {
     fn start_time(&self) -> f64;
 }
-=======
->>>>>>> 42db299 (meow)

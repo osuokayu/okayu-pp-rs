@@ -3,16 +3,10 @@ use std::cmp;
 use rosu_map::section::general::GameMode;
 
 use crate::{
-<<<<<<< HEAD
     any::difficulty::skills::StrainSkill,
     catch::{
         attributes::{GradualObjectCount, ObjectCountBuilder},
         catcher::Catcher,
-=======
-    any::difficulty::skills::Skill,
-    catch::{
-        attributes::{GradualObjectCount, ObjectCountBuilder},
->>>>>>> 42db299 (meow)
         convert::convert_objects,
         CatchDifficultyAttributes,
     },
@@ -41,18 +35,8 @@ use super::{
 /// # Example
 ///
 /// ```
-<<<<<<< HEAD
-<<<<<<< HEAD
-/// use okayu_pp::{Beatmap, Difficulty};
-/// use okayu_pp::catch::{Catch, CatchGradualDifficulty};
-=======
 /// use akatsuki_pp::{Beatmap, Difficulty};
 /// use akatsuki_pp::catch::{Catch, CatchGradualDifficulty};
->>>>>>> 42db299 (meow)
-=======
-/// use okayu_pp::{Beatmap, Difficulty};
-/// use okayu_pp::catch::{Catch, CatchGradualDifficulty};
->>>>>>> 0929f74 (change akatsuki to okayu)
 ///
 /// let map = Beatmap::from_path("./resources/2118524.osu").unwrap();
 ///
@@ -103,27 +87,17 @@ impl CatchGradualDifficulty {
             map_attrs.cs as f32,
         );
 
-<<<<<<< HEAD
         let mut half_catcher_width = Catcher::calculate_catch_width(map_attrs.cs as f32) * 0.5;
         half_catcher_width *= 1.0 - ((map_attrs.cs as f32 - 5.5).max(0.0) * 0.0625);
 
         let diff_objects = DifficultyValues::create_difficulty_objects(
             clock_rate,
             half_catcher_width,
-=======
-        let diff_objects = DifficultyValues::create_difficulty_objects(
-            &map_attrs,
-            clock_rate,
->>>>>>> 42db299 (meow)
             palpable_objects.iter(),
         );
 
         let count = count.into_gradual();
-<<<<<<< HEAD
         let movement = Movement::new(half_catcher_width, clock_rate);
-=======
-        let movement = Movement::new(clock_rate);
->>>>>>> 42db299 (meow)
 
         Ok(Self {
             idx: 0,
@@ -146,11 +120,7 @@ impl Iterator for CatchGradualDifficulty {
         // object yet and just skip processing.
         if self.idx > 0 {
             let curr = self.diff_objects.get(self.idx - 1)?;
-<<<<<<< HEAD
             self.movement.process(curr, &self.diff_objects);
-=======
-            Skill::new(&mut self.movement, &self.diff_objects).process(curr);
->>>>>>> 42db299 (meow)
         } else if self.count.is_empty() {
             return None;
         }
@@ -160,11 +130,7 @@ impl Iterator for CatchGradualDifficulty {
 
         let mut attrs = self.attrs.clone();
 
-<<<<<<< HEAD
         let movement = self.movement.cloned_difficulty_value();
-=======
-        let movement = self.movement.as_difficulty_value();
->>>>>>> 42db299 (meow)
         DifficultyValues::eval(&mut attrs, movement);
 
         Some(attrs)
@@ -188,15 +154,8 @@ impl Iterator for CatchGradualDifficulty {
             self.idx += 1;
         }
 
-<<<<<<< HEAD
         for curr in skip_iter.take(take) {
             self.movement.process(curr, &self.diff_objects);
-=======
-        let mut movement = Skill::new(&mut self.movement, &self.diff_objects);
-
-        for curr in skip_iter.take(take) {
-            movement.process(curr);
->>>>>>> 42db299 (meow)
 
             self.attrs.add_object_count(self.count[self.idx]);
             self.idx += 1;

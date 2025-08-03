@@ -5,25 +5,16 @@
 //! while also providing a significant [boost in performance](#speed).
 //!
 //! Last commits of the ported code:
-<<<<<<< HEAD
 //!   - [osu!lazer] : `79b737bc270c8361261a9edd43b380f5326c3848` (2025-02-27)
 //!   - [osu!tools] : `152c5d90f73f4d7eabcf4047ecb939c1b621db85` (2025-02-28)
 //!
 //! News posts of the latest updates: <https://osu.ppy.sh/home/news/2025-03-06-performance-points-star-rating-updates>
-=======
-//!   - [osu!lazer] : `8bd65d9938a10fc42e6409501b0282f0fa4a25ef` (2024-11-08)
-//!   - [osu!tools] : `89b8f3b1c2e4e5674004eac4723120e7d3aef997` (2024-11-03)
-//!
-//! News posts of the latest updates: <https://osu.ppy.sh/home/news/2024-10-28-performance-points-star-rating-updates>
->>>>>>> 42db299 (meow)
 //!
 //! ## Usage
 //!
 //! ```
 //! // Decode the map
-<<<<<<< HEAD
-<<<<<<< HEAD
-//! let map = okayu_pp::Beatmap::from_path("./resources/2785319.osu").unwrap();
+//! let map = akatsuki_pp::Beatmap::from_path("./resources/2785319.osu").unwrap();
 //!
 //! // Whereas osu! simply times out on malicious maps, rosu-pp does not. To
 //! // prevent potential performance/memory issues, it is recommended to check
@@ -33,34 +24,14 @@
 //! }
 //!
 //! // Calculate difficulty attributes
-//! let diff_attrs = okayu_pp::Difficulty::new()
-=======
-//! let map = akatsuki_pp::Beatmap::from_path("./resources/2785319.osu").unwrap();
-//!
-//! // Calculate difficulty attributes
 //! let diff_attrs = akatsuki_pp::Difficulty::new()
->>>>>>> 42db299 (meow)
-=======
-//! let map = okayu_pp::Beatmap::from_path("./resources/2785319.osu").unwrap();
-//!
-//! // Calculate difficulty attributes
-//! let diff_attrs = okayu_pp::Difficulty::new()
->>>>>>> 0929f74 (change akatsuki to okayu)
 //!     .mods(8 + 16) // HDHR
 //!     .calculate(&map);
 //!
 //! let stars = diff_attrs.stars();
 //!
 //! // Calculate performance attributes
-<<<<<<< HEAD
-<<<<<<< HEAD
-//! let perf_attrs = okayu_pp::Performance::new(diff_attrs)
-=======
 //! let perf_attrs = akatsuki_pp::Performance::new(diff_attrs)
->>>>>>> 42db299 (meow)
-=======
-//! let perf_attrs = okayu_pp::Performance::new(diff_attrs)
->>>>>>> 0929f74 (change akatsuki to okayu)
 //!     // To speed up the calculation, we used the previous attributes.
 //!     // **Note** that this should only be done if the map and all difficulty
 //!     // settings stay the same, otherwise the final attributes will be incorrect!
@@ -91,15 +62,7 @@
 //! score state.
 //!
 //! ```
-<<<<<<< HEAD
-<<<<<<< HEAD
-//! use okayu_pp::{Beatmap, GradualPerformance, Difficulty, any::ScoreState};
-=======
 //! use akatsuki_pp::{Beatmap, GradualPerformance, Difficulty, any::ScoreState};
->>>>>>> 42db299 (meow)
-=======
-//! use okayu_pp::{Beatmap, GradualPerformance, Difficulty, any::ScoreState};
->>>>>>> 0929f74 (change akatsuki to okayu)
 //!
 //! let map = Beatmap::from_path("./resources/1028484.osu").unwrap();
 //!
@@ -131,24 +94,14 @@
 //!
 //! ## Accuracy
 //!
-<<<<<<< HEAD
 //! `rosu-pp` was tested against millions of real scores and delivered
-=======
-//! `rosu-pp` was tested against all current beatmaps on multiple mod combinations and delivered
->>>>>>> 42db299 (meow)
 //! values that matched osu!lazer perfectly down to the last decimal place.
 //!
 //! However, there is one small caveat: the values are only this precise on debug mode.
 //! On release mode, Rust's compiler performs optimizations that produce the tiniest discrepancies
-<<<<<<< HEAD
 //! due to floating point inaccuracies. With this in mind, `rosu-pp` is still as accurate as can
 //! be without targeting the .NET compiler itself.
 //! Realistically, the inaccuracies in release mode are negligibly small.
-=======
-//! due to floating point inaccuracies which can cascade into larger differences in the end.
-//! With this in mind, `rosu-pp` is still as accurate as can be without targeting the
-//! .NET compiler itself. Realistically, the inaccuracies in release mode are negligibly small.
->>>>>>> 42db299 (meow)
 //!
 //! ## Speed
 //!
@@ -159,7 +112,6 @@
 //! Results of a rudimentary [benchmark] of osu!lazer and rosu-pp:
 //! ```txt
 //! osu!lazer:
-<<<<<<< HEAD
 //! Decoding maps:            Median: 325.18ms | Mean: 325.50ms
 //! Calculating difficulties: Median: 568.63ms | Mean: 575.97ms
 //! Calculating performances: Median: 256.00µs | Mean: 240.40µs
@@ -168,16 +120,6 @@
 //! Decoding maps:            Median: 46.03ms | Mean: 47.13ms
 //! Calculating difficulties: Median: 82.11ms | Mean: 84.27ms
 //! Calculating performances: Median: 40.57µs | Mean: 43.41µs
-=======
-//! Decoding maps:            Median: 378.10ms | Mean: 381.47ms
-//! Calculating difficulties: Median: 588.89ms | Mean: 597.11ms
-//! Calculating performances: Median: 315.90µs | Mean: 310.60µs
-//!
-//! rosu-pp:
-//! Decoding maps:            Median: 46.94ms | Mean: 47.21ms
-//! Calculating difficulties: Median: 72.90ms | Mean: 73.13ms
-//! Calculating performances: Median: 44.13µs | Mean: 45.53µs
->>>>>>> 42db299 (meow)
 //! ```
 //!
 //! ## Features
@@ -218,12 +160,8 @@
     clippy::cast_sign_loss,
     clippy::explicit_iter_loop,
     clippy::similar_names,
-<<<<<<< HEAD
     clippy::cast_possible_wrap,
     clippy::manual_midpoint
-=======
-    clippy::cast_possible_wrap
->>>>>>> 42db299 (meow)
 )]
 
 #[doc(inline)]
@@ -232,12 +170,9 @@ pub use self::{
     model::{beatmap::Beatmap, mods::GameMods},
 };
 
-<<<<<<< HEAD
 #[macro_use]
 mod util;
 
-=======
->>>>>>> 42db299 (meow)
 /// Types for calculations of any mode.
 pub mod any;
 
@@ -258,8 +193,3 @@ pub mod osu_2019;
 
 /// Types used in and around this crate.
 pub mod model;
-<<<<<<< HEAD
-=======
-
-mod util;
->>>>>>> 42db299 (meow)

@@ -39,21 +39,13 @@ impl CatchDifficultyAttributes {
         self.into()
     }
 
-<<<<<<< HEAD
     pub(crate) const fn set_object_count(&mut self, count: &ObjectCount) {
-=======
-    pub(crate) fn set_object_count(&mut self, count: &ObjectCount) {
->>>>>>> 42db299 (meow)
         self.n_fruits = count.fruits;
         self.n_droplets = count.droplets;
         self.n_tiny_droplets = count.tiny_droplets;
     }
 
-<<<<<<< HEAD
     pub(crate) const fn add_object_count(&mut self, count: GradualObjectCount) {
-=======
-    pub(crate) fn add_object_count(&mut self, count: GradualObjectCount) {
->>>>>>> 42db299 (meow)
         if count.fruit {
             self.n_fruits += 1;
         } else {
@@ -190,11 +182,7 @@ impl ObjectCountBuilder {
         }
     }
 
-<<<<<<< HEAD
     pub const fn record_tiny_droplets(&mut self, n: u32) {
-=======
-    pub fn record_tiny_droplets(&mut self, n: u32) {
->>>>>>> 42db299 (meow)
         match self {
             Self::Regular { count, take } => {
                 if *take > 0 {

@@ -1,14 +1,10 @@
 use rosu_map::section::general::GameMode;
 
 use crate::{
-<<<<<<< HEAD
     any::{difficulty::skills::StrainSkill, Difficulty},
     mania::difficulty::DifficultyValues,
     model::mode::ConvertError,
     Beatmap,
-=======
-    any::Difficulty, mania::difficulty::DifficultyValues, model::mode::ConvertError, Beatmap,
->>>>>>> 42db299 (meow)
 };
 
 /// The result of calculating the strains on a osu!mania map.
@@ -30,10 +26,6 @@ pub fn strains(difficulty: &Difficulty, map: &Beatmap) -> Result<ManiaStrains, C
     let values = DifficultyValues::calculate(difficulty, &map);
 
     Ok(ManiaStrains {
-<<<<<<< HEAD
         strains: values.strain.into_current_strain_peaks().into_vec(),
-=======
-        strains: values.strain.get_curr_strain_peaks().into_vec(),
->>>>>>> 42db299 (meow)
     })
 }

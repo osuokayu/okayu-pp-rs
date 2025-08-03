@@ -1,19 +1,12 @@
-<<<<<<< HEAD
 use crate::{model::beatmap::BeatmapAttributesBuilder, osu::performance::OsuPerformance};
-=======
-use crate::osu::performance::OsuPerformance;
->>>>>>> 42db299 (meow)
 
 /// The result of a difficulty calculation on an osu!standard map.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct OsuDifficultyAttributes {
     /// The difficulty of the aim skill.
     pub aim: f64,
-<<<<<<< HEAD
     /// The number of sliders weighted by difficulty.
     pub aim_difficult_slider_count: f64,
-=======
->>>>>>> 42db299 (meow)
     /// The difficulty of the speed skill.
     pub speed: f64,
     /// The difficulty of the flashlight skill.
@@ -28,17 +21,12 @@ pub struct OsuDifficultyAttributes {
     pub speed_difficult_strain_count: f64,
     /// The approach rate.
     pub ar: f64,
-<<<<<<< HEAD
     /// The great hit window.
     pub great_hit_window: f64,
     /// The ok hit window.
     pub ok_hit_window: f64,
     /// The meh hit window.
     pub meh_hit_window: f64,
-=======
-    /// The overall difficulty
-    pub od: f64,
->>>>>>> 42db299 (meow)
     /// The health drain rate.
     pub hp: f64,
     /// The amount of circles.
@@ -49,17 +37,10 @@ pub struct OsuDifficultyAttributes {
     ///
     /// The meaning depends on the kind of score:
     /// - if set on osu!stable, this value is irrelevant
-<<<<<<< HEAD
     /// - if set on osu!lazer *with* slider accuracy, this value is the amount
     ///   of hit slider ticks and repeats
     /// - if set on osu!lazer *without* slider accuracy, this value is the
     ///   amount of hit slider heads, ticks, and repeats
-=======
-    /// - if set on osu!lazer *without* `CL`, this value is the amount of
-    ///   slider ticks and repeats
-    /// - if set on osu!lazer *with* `CL`, this value is the amount of slider
-    ///   heads, ticks, and repeats
->>>>>>> 42db299 (meow)
     pub n_large_ticks: u32,
     /// The amount of spinners.
     pub n_spinners: u32,
@@ -80,14 +61,11 @@ impl OsuDifficultyAttributes {
         self.n_circles + self.n_sliders + self.n_spinners
     }
 
-<<<<<<< HEAD
     /// The overall difficulty
     pub const fn od(&self) -> f64 {
         BeatmapAttributesBuilder::osu_great_hit_window_to_od(self.great_hit_window)
     }
 
-=======
->>>>>>> 42db299 (meow)
     /// Returns a builder for performance calculation.
     pub fn performance<'a>(self) -> OsuPerformance<'a> {
         self.into()
@@ -111,11 +89,8 @@ pub struct OsuPerformanceAttributes {
     pub pp_speed: f64,
     /// Misses including an approximated amount of slider breaks
     pub effective_miss_count: f64,
-<<<<<<< HEAD
     /// Approximated unstable-rate
     pub speed_deviation: Option<f64>,
-=======
->>>>>>> 42db299 (meow)
 }
 
 impl OsuPerformanceAttributes {

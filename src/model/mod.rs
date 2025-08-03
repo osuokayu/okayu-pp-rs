@@ -10,9 +10,5 @@ pub mod hit_object;
 /// Gamemode related types.
 pub mod mode;
 
-<<<<<<< HEAD
 /// Gamemods related types.
 pub mod mods;
-=======
-pub(crate) mod mods;
->>>>>>> 42db299 (meow)
