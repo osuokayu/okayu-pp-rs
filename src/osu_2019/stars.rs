@@ -69,9 +69,14 @@ pub fn stars(
     let mut aim = Skill::new(SkillKind::Aim);
     let mut speed = Skill::new(SkillKind::Speed);
 
-    // First object has no predecessor and thus no strain, handle distinctly
-    let mut current_section_end =
-        (map.hit_objects[0].start_time as f32 / section_len).ceil() * section_len;
+    let first_object = map.hit_objects.get(0)
+        .cloned()
+        .unwrap_or_else(|| {
+            panic!("No hit objects found");
+        });
+
+    let mut current_section_end = 
+        (first_object.start_time as f32 / section_len).ceil() * section_len;
 
     let mut prev_prev = None;
     let mut prev = hit_objects.next().unwrap();
