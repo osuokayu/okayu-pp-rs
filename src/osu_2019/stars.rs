@@ -69,14 +69,13 @@ pub fn stars(
     let mut aim = Skill::new(SkillKind::Aim);
     let mut speed = Skill::new(SkillKind::Speed);
 
-    let first_object = map.hit_objects.get(0)
-        .cloned()
-        .unwrap_or_else(|| {
-            panic!("No hit objects found");
-        });
-
-    let mut current_section_end = 
-        (first_object.start_time as f32 / section_len).ceil() * section_len;
+    let current_section_end = if map.hit_objects.is_empty() {
+        eprintln!("No hit objects found, using default value");
+        DEFAULT_SECTION_END
+    } else {
+        let first_object = &map.hit_objects[0];
+        (first_object.start_time as f32 / section_len).ceil() * section_len
+    };
 
     let mut prev_prev = None;
     let mut prev = hit_objects.next().unwrap();
