@@ -36,7 +36,9 @@ pub fn stars(
         ..Default::default()
     };
 
-    let take = passed_objects.unwrap_or(map.hit_objects.len() as u32) as usize;
+    let take = passed_objects
+        .unwrap_or(map.hit_objects.len() as u32)
+        .min(map.hit_objects.len() as u32) as usize;
 
     if take < 2 {
         return diff_attributes;
@@ -71,7 +73,7 @@ pub fn stars(
 
     // First object has no predecessor and thus no strain, handle distinctly
     let mut current_section_end =
-        (map.hit_objects[0].start_time as f32 / section_len).ceil() * section_len;
+        (map.hit_objects.first().unwrap().start_time as f32 / section_len).ceil() * section_len;
 
     let mut prev_prev = None;
     let mut prev = hit_objects.next().unwrap();
