@@ -69,13 +69,9 @@ pub fn stars(
     let mut aim = Skill::new(SkillKind::Aim);
     let mut speed = Skill::new(SkillKind::Speed);
 
-    let mut current_section_end = if map.hit_objects.is_empty() {
-        eprintln!("No hit objects found, using default value");
-        0.0
-    } else {
-        let first_object = &map.hit_objects[0];
-        (first_object.start_time as f32 / section_len).ceil() * section_len
-    };
+    // First object has no predecessor and thus no strain, handle distinctly
+    let mut current_section_end =
+        (map.hit_objects[0].start_time as f32 / section_len).ceil() * section_len;
 
     let mut prev_prev = None;
     let mut prev = hit_objects.next().unwrap();
