@@ -69,7 +69,7 @@ pub fn stars(
     let mut aim = Skill::new(SkillKind::Aim);
     let mut speed = Skill::new(SkillKind::Speed);
 
-    let current_section_end = if map.hit_objects.is_empty() {
+    let mut current_section_end = if map.hit_objects.is_empty() {
         eprintln!("No hit objects found, using default value");
         section_len
     } else {
