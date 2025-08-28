@@ -71,7 +71,6 @@ pub fn stars(
 
     let current_section_end = if map.hit_objects.is_empty() {
         eprintln!("No hit objects found, using default value");
-        DEFAULT_SECTION_END
     } else {
         let first_object = &map.hit_objects[0];
         (first_object.start_time as f32 / section_len).ceil() * section_len
